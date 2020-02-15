@@ -1,0 +1,13 @@
+<launch>
+  <arg name="frame"       default="map" />
+  <arg name="graph_topic" default="graph"/>
+  <arg name="ns"          default="/pose_graph"/>
+
+  <!-- visualizer node -->
+  <node name="posegraph_viewer" pkg="kimera_graph_visualizer" exec="visualizer_node"
+    output="screen" ns="$(arg ns)">
+    <remap from="graph"       to="$(arg graph_topic)" />
+
+    <param name="frame_id" value="$(arg frame)"/>
+  </node>
+</launch>
