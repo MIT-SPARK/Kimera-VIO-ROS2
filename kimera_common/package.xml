@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>kimera_common</name>
+  <version>0.0.1</version>
+  <description>Common support functionality used throughout the Kimera stack</description>
+  <maintainer email="roxfoxpox@gmail.com">Ruffin White</maintainer>
+  <license>BSD</license>
+
+  <buildtool_depend>ament_cmake_core</buildtool_depend>
+
+  <buildtool_export_depend>ament_cmake_core</buildtool_export_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
