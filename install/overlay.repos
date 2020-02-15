@@ -1,0 +1,13 @@
+repositories:
+  MIT-SPARK/Kimera-RPGO:
+    type: git
+    # url: https://github.com/MIT-SPARK/Kimera-RPGO.git
+    # version: master
+    url: https://github.com/ruffsl/Kimera-RPGO.git
+    version: patch-1
+  MIT-SPARK/Kimera-VIO:
+    type: git
+    # url: https://github.com/MIT-SPARK/Kimera-VIO.git
+    # version: master
+    url: https://github.com/ruffsl/Kimera-VIO.git
+    version: patch-3
