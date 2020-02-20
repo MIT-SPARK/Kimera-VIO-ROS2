@@ -28,18 +28,21 @@ StereoInterface::StereoInterface(
   auto stereo_opt = rclcpp::SubscriptionOptions();
   stereo_opt.callback_group = callback_group_stereo_;
 
-  std::string transport = "raw";
+  int queue_size_ = 10;
+  auto qos = rclcpp::SensorDataQoS();
   std::string left_topic = "left_cam";
   std::string right_topic = "right_cam";
-  auto qos = rclcpp::SensorDataQoS();
-  int queue_size_ = 10;
 
+  // TODO: Perhaps switch to image_transport to support more transports
+  // std::string transport = "raw";
   // image_transport::TransportHints hints(node, transport);
   // left_sub_.subscribe(node, left_topic, hints.getTransport(), qos.get_rmw_qos_profile());
   // right_sub_.subscribe(node, right_topic, hints.getTransport(), qos.get_rmw_qos_profile());
   // exact_sync_ = std::make_shared<ExactSync>(
   //   ExactPolicy(queue_size_), left_sub_, right_sub_);
 
+  // TODO: Assign message filter subscribers to callback_group_stereo_
+  // Pending: https://github.com/ros2/message_filters/issues/45
   l_sub_ = std::make_shared<message_filters::Subscriber<Image>>(
     node.shared_from_this(),
     left_topic,
