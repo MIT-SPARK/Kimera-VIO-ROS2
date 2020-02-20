@@ -49,15 +49,14 @@ ament_target_dependencies(${library_name}
 target_link_libraries(${library_name}
   kimera_vio)
 
-# set(executable_name kimera_vio_ros_node)
-# add_executable(${executable_name}
-#   src/KimeraVio.cpp
-# )
-# ament_target_dependencies(${executable_name}
-#   ${dependencies})
-# target_link_libraries(${executable_name}
-#   ${library_name}
-#   kimera_vio)
+set(executable_name stereo_vio_node)
+add_executable(${executable_name}
+  src/stereo_vio_node.cpp
+)
+ament_target_dependencies(${executable_name}
+  ${dependencies})
+target_link_libraries(${executable_name}
+  ${library_name})
 
 
 install(TARGETS ${executable_name} ${library_name}

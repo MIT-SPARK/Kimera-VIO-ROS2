@@ -9,17 +9,17 @@ namespace kimera_vio_ros
 namespace nodes
 {
 
-class StereoVio :
-  public rclcpp::Node,
+class StereoVio
+  : public rclcpp::Node,
   public interfaces::StereoInterface,
   public interfaces::ImuInterface
 {
 public:
-  explicit StereoVio(const rclcpp::NodeOptions & node_options = rclcpp::NodeOptions());
+  StereoVio(
+    const std::string & node_name,
+    const rclcpp::NodeOptions & node_options = rclcpp::NodeOptions());
   ~StereoVio();
 
-// private:
-//   rclcpp::Node & node_
 };
 
 }  // namespace interfaces
