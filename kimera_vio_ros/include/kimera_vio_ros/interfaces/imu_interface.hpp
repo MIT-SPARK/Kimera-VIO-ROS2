@@ -11,7 +11,7 @@ namespace kimera_vio_ros
 namespace interfaces
 {
 
-class ImuInterface: public BaseInterface
+class ImuInterface : public BaseInterface
 {
 public:
   ImuInterface(

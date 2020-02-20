@@ -10,7 +10,7 @@ namespace kimera_vio_ros
 namespace interfaces
 {
 
-class BaseInterface: public VIO::DataProviderInterface
+class BaseInterface : public VIO::DataProviderInterface
 {
 public:
   BaseInterface(

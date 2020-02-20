@@ -7,8 +7,7 @@ namespace interfaces
 
 BaseInterface::BaseInterface(
   rclcpp::Node & node)
-:
-  VIO::DataProviderInterface(),
+: VIO::DataProviderInterface(),
   node_(node),
   pipeline_(nullptr)
 {
@@ -17,7 +16,7 @@ BaseInterface::BaseInterface(
 
 BaseInterface::~BaseInterface()
 {
-   pipeline_->shutdown();
+  pipeline_->shutdown();
 }
 
 }  // namespace interfaces

@@ -46,7 +46,7 @@ ImuInterface::~ImuInterface()
 void ImuInterface::imu_cb(const Imu::SharedPtr imu_msg)
 {
   rclcpp::Time stamp(imu_msg->header.stamp);
-  if(stamp.nanoseconds() > last_imu_timestamp_.nanoseconds()){
+  if (stamp.nanoseconds() > last_imu_timestamp_.nanoseconds()) {
     VIO::Timestamp timestamp = stamp.nanoseconds();
     VIO::ImuAccGyr imu_accgyr;
 
@@ -58,7 +58,7 @@ void ImuInterface::imu_cb(const Imu::SharedPtr imu_msg)
     imu_accgyr(5) = imu_msg->angular_velocity.z;
 
     this->imu_single_callback_(VIO::ImuMeasurement(timestamp, imu_accgyr));
-  //   LOG_EVERY_N(INFO, 200) << "Done: KimeraVioNode::imu_cb";
+    //   LOG_EVERY_N(INFO, 200) << "Done: KimeraVioNode::imu_cb";
   }
   last_imu_timestamp_ = stamp;
 }
