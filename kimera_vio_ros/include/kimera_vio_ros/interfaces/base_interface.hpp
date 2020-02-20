@@ -14,14 +14,14 @@ class BaseInterface
 {
 public:
   BaseInterface(
-    // VIO::DataProviderInterface & dpi,
+    VIO::DataProviderInterface::Ptr dpi,
     rclcpp::Node & node);
   virtual ~BaseInterface();
 
 protected:
+  VIO::DataProviderInterface::Ptr dpi_;
   rclcpp::Node & node_;
-  // VIO::DataProviderInterface dpi_;
-  // VIO::Pipeline pipeline_;
+  VIO::Pipeline::Ptr pipeline_;
 };
 
 }  // namespace interfaces

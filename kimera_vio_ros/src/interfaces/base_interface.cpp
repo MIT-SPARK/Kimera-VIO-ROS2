@@ -6,21 +6,19 @@ namespace interfaces
 {
 
 BaseInterface::BaseInterface(
-  // VIO::DataProviderInterface & dpi,
+  VIO::DataProviderInterface::Ptr dpi,
   rclcpp::Node & node)
 :
-  // dpi_(),
-//  pipeline_(dpi.pipeline_params_),
-  node_(node)  
+  dpi_(dpi),
+  node_(node),
+  pipeline_(nullptr)
 {
-
-//  pipeline_(dpi_.pipeline_params_);
-
+  pipeline_.reset(new VIO::Pipeline(dpi_->pipeline_params_));
 }
 
 BaseInterface::~BaseInterface()
 {
-  // pipeline_.shutdown();
+   pipeline_->shutdown();
 }
 
 }  // namespace interfaces
