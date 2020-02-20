@@ -1,5 +1,5 @@
-#ifndef KIMERA_ROS__INTERFACES__IMU_INTERFACE_HPP_
-#define KIMERA_ROS__INTERFACES__IMU_INTERFACE_HPP_
+#ifndef KIMERA_ROS__INTERFACES__STEREO_INTERFACE_HPP_
+#define KIMERA_ROS__INTERFACES__STEREO_INTERFACE_HPP_
 
 #include "kimera_vio_ros/interfaces/base_interface.hpp"
 // #include "image_transport/subscriber_filter.h"
@@ -44,4 +44,4 @@ private:
 }  // namespace interfaces
 }  // namespace kimera_vio_ros
 
-#endif  // KIMERA_ROS__INTERFACES__IMU_INTERFACE_HPP_
+#endif  // KIMERA_ROS__INTERFACES__STEREO_INTERFACE_HPP_
