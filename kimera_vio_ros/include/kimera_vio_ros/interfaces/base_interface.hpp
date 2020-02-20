@@ -10,16 +10,14 @@ namespace kimera_vio_ros
 namespace interfaces
 {
 
-class BaseInterface
+class BaseInterface: public VIO::DataProviderInterface
 {
 public:
   BaseInterface(
-    VIO::DataProviderInterface::Ptr dpi,
     rclcpp::Node & node);
   virtual ~BaseInterface();
 
 protected:
-  VIO::DataProviderInterface::Ptr dpi_;
   rclcpp::Node & node_;
   VIO::Pipeline::Ptr pipeline_;
 };
