@@ -9,10 +9,9 @@ namespace interfaces
 const cv::Mat readRosImage(
   const sensor_msgs::msg::Image::ConstSharedPtr & img_msg)
 {
-  cv_bridge::CvImagePtr cv_ptr;
+  cv_bridge::CvImageConstPtr cv_constptr;
   try {
-    // TODO(Toni): here we should consider using toCvShare...
-    cv_ptr = cv_bridge::toCvCopy(img_msg);
+    cv_constptr = cv_bridge::toCvShare(img_msg);
   } catch (cv_bridge::Exception & exception) {
     // RCLCPP_FATAL(this->get_logger(), "cv_bridge exception: %s", exception.what());
     // rclcpp::shutdown();
@@ -20,13 +19,13 @@ const cv::Mat readRosImage(
 
   if (img_msg->encoding == sensor_msgs::image_encodings::BGR8) {
     // LOG(WARNING) << "Converting image...";
-    cv::cvtColor(cv_ptr->image, cv_ptr->image, cv::COLOR_BGR2GRAY);
+    cv::cvtColor(cv_constptr->image, cv_constptr->image, cv::COLOR_BGR2GRAY);
   } else {
-    // CHECK_EQ(cv_ptr->encoding, sensor_msgs::image_encodings::MONO8)
+    // CHECK_EQ(cv_constptr->encoding, sensor_msgs::image_encodings::MONO8)
     //     << "Expected image with MONO8 or BGR8 encoding.";
   }
 
-  return cv_ptr->image;
+  return cv_constptr->image;
 }
 
 StereoInterface::StereoInterface(
