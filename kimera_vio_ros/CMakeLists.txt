@@ -40,6 +40,7 @@ set(library_name ${PROJECT_NAME})
 add_library(${library_name} SHARED
   src/interfaces/base_interface.cpp
   src/interfaces/imu_interface.cpp
+  src/interfaces/stereo_interface.cpp
 )
 ament_target_dependencies(${library_name}
   ${dependencies})
