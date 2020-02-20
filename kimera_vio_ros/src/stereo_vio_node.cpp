@@ -1,6 +1,4 @@
-#include <gflags/gflags.h>
-#include <glog/logging.h>
-
+#include "gflags/gflags.h"
 #include "kimera_vio_ros/nodes/stereo_vio.hpp"
 
 using namespace kimera_vio_ros::nodes;
@@ -11,8 +9,6 @@ int main(int argc, char * argv[])
   int g_argc = g_args.size();
   // Initialize Google's flags library.
   google::ParseCommandLineFlags(&g_argc, &argv, true);
-  // Initialize Google's logging library.
-  google::InitGoogleLogging(argv[0]);
 
   rclcpp::executors::MultiThreadedExecutor executor;
   auto stereo_vio_node = std::make_shared<StereoVio>("stereo_vio");
