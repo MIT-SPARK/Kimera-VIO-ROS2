@@ -42,6 +42,7 @@ add_library(${library_name} SHARED
   src/interfaces/image_interface.cpp
   src/interfaces/imu_interface.cpp
   src/interfaces/stereo_interface.cpp
+  src/nodes/stereo_vio.cpp
 )
 ament_target_dependencies(${library_name}
   ${dependencies})
