@@ -4,7 +4,7 @@
 #include "kimera_vio_ros/interfaces/base_interface.hpp"
 #include "sensor_msgs/msg/imu.hpp"
 
-using namespace sensor_msgs::msg;
+using Imu = sensor_msgs::msg::Imu;
 
 namespace kimera_vio_ros
 {
