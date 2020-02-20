@@ -5,8 +5,8 @@ namespace kimera_vio_ros
 namespace nodes
 {
 
-StereoVio::StereoVio()
-: Node("stereo_vio"),
+StereoVio::StereoVio(const rclcpp::NodeOptions & node_options)
+: Node("stereo_vio", node_options),
   interfaces::StereoInterface(*dynamic_cast<Node*>(this)),
   interfaces::ImuInterface(*dynamic_cast<Node*>(this))
 {
