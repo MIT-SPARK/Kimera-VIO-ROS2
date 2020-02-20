@@ -1,4 +1,3 @@
-#include "cv_bridge/cv_bridge.h"
 #include "kimera_vio_ros/interfaces/stereo_interface.hpp"
 
 namespace kimera_vio_ros
@@ -6,31 +5,9 @@ namespace kimera_vio_ros
 namespace interfaces
 {
 
-const cv::Mat readRosImage(
-  const sensor_msgs::msg::Image::ConstSharedPtr & img_msg)
-{
-  cv_bridge::CvImageConstPtr cv_constptr;
-  try {
-    cv_constptr = cv_bridge::toCvShare(img_msg);
-  } catch (cv_bridge::Exception & exception) {
-    // RCLCPP_FATAL(this->get_logger(), "cv_bridge exception: %s", exception.what());
-    // rclcpp::shutdown();
-  }
-
-  if (img_msg->encoding == sensor_msgs::image_encodings::BGR8) {
-    // LOG(WARNING) << "Converting image...";
-    cv::cvtColor(cv_constptr->image, cv_constptr->image, cv::COLOR_BGR2GRAY);
-  } else {
-    // CHECK_EQ(cv_constptr->encoding, sensor_msgs::image_encodings::MONO8)
-    //     << "Expected image with MONO8 or BGR8 encoding.";
-  }
-
-  return cv_constptr->image;
-}
-
 StereoInterface::StereoInterface(
   rclcpp::Node & node)
-: BaseInterface(node),
+: ImageInterface(node),
   frame_count_(VIO::FrameId(0)),
   last_stereo_timestamp_(0)
 {
