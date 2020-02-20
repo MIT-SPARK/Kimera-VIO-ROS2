@@ -7,8 +7,8 @@ namespace nodes
 
 StereoVio::StereoVio()
 : Node("stereo_vio"),
-  kimera_vio_ros::interfaces::StereoInterface(*this),
-  kimera_vio_ros::interfaces::ImuInterface(*this)
+  interfaces::StereoInterface(*dynamic_cast<Node*>(this)),
+  interfaces::ImuInterface(*dynamic_cast<Node*>(this))
 {
 }
 
