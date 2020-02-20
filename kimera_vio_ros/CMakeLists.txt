@@ -1,6 +1,16 @@
 cmake_minimum_required(VERSION 3.5)
 project(kimera_vio_ros)
 
+find_package(Boost REQUIRED COMPONENTS
+  chrono
+  date_time
+  filesystem
+  regex
+  serialization
+  system
+  thread
+  timer
+)
 # find_package(Gflags REQUIRED)
 # find_package(Glog REQUIRED)
 find_package(OpenCV 3.3.1 REQUIRED)
