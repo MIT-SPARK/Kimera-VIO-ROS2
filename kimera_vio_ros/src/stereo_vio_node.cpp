@@ -11,7 +11,7 @@ int main(int argc, char * argv[])
   google::ParseCommandLineFlags(&g_argc, &argv, true);
 
   rclcpp::executors::MultiThreadedExecutor executor;
-  auto stereo_vio_node = std::make_shared<StereoVio>("stereo_vio");
+  auto stereo_vio_node = std::make_shared<StereoVio>();
   executor.add_node(stereo_vio_node);
   executor.spin();
   rclcpp::shutdown();

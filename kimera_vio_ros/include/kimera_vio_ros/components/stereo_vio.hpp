@@ -15,9 +15,8 @@ class StereoVio
   public interfaces::ImuInterface
 {
 public:
-  StereoVio(
-    const std::string & node_name,
-    const rclcpp::NodeOptions & node_options = rclcpp::NodeOptions());
+  explicit StereoVio(
+    const rclcpp::NodeOptions & options = rclcpp::NodeOptions());
   ~StereoVio();
 
 };
