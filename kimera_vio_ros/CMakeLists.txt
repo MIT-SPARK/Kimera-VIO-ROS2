@@ -17,7 +17,7 @@ find_package(ament_cmake REQUIRED)
 find_package(cv_bridge REQUIRED)
 find_package(kimera_common REQUIRED)
 find_package(kimera_vio REQUIRED)
-find_package(message_filters)
+find_package(message_filters REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_components REQUIRED)
 find_package(sensor_msgs REQUIRED)
@@ -52,17 +52,18 @@ rclcpp_components_register_nodes(${library_name}
 target_link_libraries(${library_name}
   kimera_vio)
 
-set(executable_name stereo_vio_node)
-add_executable(${executable_name}
-  src/stereo_vio_node.cpp
-)
-ament_target_dependencies(${executable_name}
+add_executable(stereo_vio_node
+  src/stereo_vio_node.cpp)
+ament_target_dependencies(stereo_vio_node
   ${dependencies})
-target_link_libraries(${executable_name}
+target_link_libraries(stereo_vio_node
   ${library_name})
 
+set(executable_names
+  stereo_vio_node
+)
 
-install(TARGETS ${executable_name} ${library_name}
+install(TARGETS ${executable_names} ${library_name}
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION lib/${PROJECT_NAME}
