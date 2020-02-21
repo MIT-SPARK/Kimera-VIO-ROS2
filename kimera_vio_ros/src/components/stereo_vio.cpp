@@ -1,8 +1,8 @@
-#include "kimera_vio_ros/nodes/stereo_vio.hpp"
+#include "kimera_vio_ros/components/stereo_vio.hpp"
 
 namespace kimera_vio_ros
 {
-namespace nodes
+namespace components
 {
 
 StereoVio::StereoVio(
@@ -18,5 +18,5 @@ StereoVio::~StereoVio()
 {
 }
 
-}  // namespace nodes
+}  // namespace components
 }  // namespace kimera_vio_ros

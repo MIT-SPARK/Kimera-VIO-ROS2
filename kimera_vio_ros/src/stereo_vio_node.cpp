@@ -1,7 +1,7 @@
 #include "gflags/gflags.h"
-#include "kimera_vio_ros/nodes/stereo_vio.hpp"
+#include "kimera_vio_ros/components/stereo_vio.hpp"
 
-using StereoVio = kimera_vio_ros::nodes::StereoVio;
+using StereoVio = kimera_vio_ros::components::StereoVio;
 
 int main(int argc, char * argv[])
 {
