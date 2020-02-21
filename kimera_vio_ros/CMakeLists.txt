@@ -19,6 +19,7 @@ find_package(kimera_common REQUIRED)
 find_package(kimera_vio REQUIRED)
 find_package(message_filters)
 find_package(rclcpp REQUIRED)
+find_package(rclcpp_components REQUIRED)
 find_package(sensor_msgs REQUIRED)
 
 kimera_package()
@@ -32,19 +33,22 @@ set(dependencies
   kimera_vio
   message_filters
   rclcpp
+  rclcpp_components
   sensor_msgs
 )
 
 set(library_name ${PROJECT_NAME})
 add_library(${library_name} SHARED
+  src/components/stereo_vio.cpp
   src/interfaces/base_interface.cpp
   src/interfaces/image_interface.cpp
   src/interfaces/imu_interface.cpp
   src/interfaces/stereo_interface.cpp
-  src/components/stereo_vio.cpp
 )
 ament_target_dependencies(${library_name}
   ${dependencies})
+rclcpp_components_register_nodes(${library_name}
+  "kimera_vio_ros::components::StereoVio")
 target_link_libraries(${library_name}
   kimera_vio)
 

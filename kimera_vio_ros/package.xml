@@ -20,6 +20,7 @@
   <depend>libopencv-dev</depend>
   <depend>message_filters</depend>
   <depend>rclcpp</depend>
+  <depend>rclcpp_components</depend>
   <depend>sensor_msgs</depend>
 
   <test_depend>ament_lint_auto</test_depend>
