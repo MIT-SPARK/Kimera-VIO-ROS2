@@ -70,8 +70,8 @@ install(TARGETS ${executable_name} ${library_name}
 
 install(DIRECTORY include/
   DESTINATION include)
-install(DIRECTORY launch
-  DESTINATION share/${PROJECT_NAME})
+# install(DIRECTORY launch
+#   DESTINATION share/${PROJECT_NAME})
 # install(DIRECTORY param
 #   DESTINATION share/${PROJECT_NAME})
 
