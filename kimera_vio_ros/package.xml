@@ -13,6 +13,7 @@
   <buildtool_depend>ament_cmake</buildtool_depend>
 
   <depend>cv_bridge</depend>
+  <depend>geometry_msgs</depend>
   <depend>kimera_common</depend>
   <depend>kimera_vio</depend>
   <depend>libboost-dev</depend>
@@ -22,6 +23,7 @@
   <depend>rclcpp</depend>
   <depend>rclcpp_components</depend>
   <depend>sensor_msgs</depend>
+  <depend>tf2_ros</depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>

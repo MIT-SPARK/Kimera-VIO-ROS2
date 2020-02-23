@@ -15,12 +15,14 @@ find_package(Gflags REQUIRED)
 find_package(OpenCV 3.3.1 REQUIRED)
 find_package(ament_cmake REQUIRED)
 find_package(cv_bridge REQUIRED)
+find_package(geometry_msgs REQUIRED)
 find_package(kimera_common REQUIRED)
 find_package(kimera_vio REQUIRED)
 find_package(message_filters REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_components REQUIRED)
 find_package(sensor_msgs REQUIRED)
+find_package(tf2_ros REQUIRED)
 
 kimera_package()
 
@@ -30,16 +32,19 @@ include_directories(
 
 set(dependencies
   cv_bridge
+  geometry_msgs
   kimera_vio
   message_filters
   rclcpp
   rclcpp_components
   sensor_msgs
+  tf2_ros
 )
 
 set(library_name ${PROJECT_NAME})
 add_library(${library_name} SHARED
   src/components/stereo_vio.cpp
+  src/interfaces/backend_interface.cpp
   src/interfaces/base_interface.cpp
   src/interfaces/image_interface.cpp
   src/interfaces/imu_interface.cpp
