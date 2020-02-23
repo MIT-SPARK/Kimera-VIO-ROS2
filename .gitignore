@@ -50,3 +50,6 @@
 
 # Qtcreator
 CMakeLists.txt.user
+
+# Visual Studio Code
+.vscode
