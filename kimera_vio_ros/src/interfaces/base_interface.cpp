@@ -17,7 +17,7 @@ BaseInterface::BaseInterface(
     "frame_id.map", "map");
   world_frame_id_ = node_.declare_parameter(
     "frame_id.world", "world");
-  
+
   pipeline_.reset(new VIO::Pipeline(this->pipeline_params_));
 }
 

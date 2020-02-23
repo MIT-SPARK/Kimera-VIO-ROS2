@@ -18,18 +18,19 @@ public:
   ~BackendInterface();
 
 public:
-  inline void callbackBackendOutput(const VIO::BackendOutput::Ptr& output) {
+  inline void callbackBackendOutput(const VIO::BackendOutput::Ptr & output)
+  {
     backend_output_queue_.push(output);
   }
 
 protected:
-  void publishBackendOutput(const VIO::BackendOutput::Ptr& output);
+  void publishBackendOutput(const VIO::BackendOutput::Ptr & output);
 
 protected:
   VIO::ThreadsafeQueue<VIO::BackendOutput::Ptr> backend_output_queue_;
 
 private:
-  void publishTf(const VIO::BackendOutput::Ptr& output);
+  void publishTf(const VIO::BackendOutput::Ptr & output);
   // void publishTimeHorizonPointCloud(const VIO::BackendOutput::Ptr& output) const;
   // void publishState(const VIO::BackendOutput::Ptr& output) const;
   // void publishImuBias(const VIO::BackendOutput::Ptr& output) const;
