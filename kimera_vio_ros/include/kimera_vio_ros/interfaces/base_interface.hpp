@@ -20,6 +20,10 @@ public:
 protected:
   rclcpp::Node & node_;
   VIO::Pipeline::Ptr pipeline_;
+
+  std::string base_link_frame_id_;
+  std::string map_frame_id_;
+  std::string world_frame_id_;
 };
 
 }  // namespace interfaces
