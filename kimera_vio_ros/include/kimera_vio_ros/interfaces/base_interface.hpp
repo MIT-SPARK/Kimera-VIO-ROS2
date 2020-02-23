@@ -1,6 +1,7 @@
 #ifndef KIMERA_ROS__INTERFACES__BASE_INTERFACE_HPP_
 #define KIMERA_ROS__INTERFACES__BASE_INTERFACE_HPP_
 
+#include "glog/logging.h"
 #include "kimera-vio/dataprovider/DataProviderInterface.h"
 #include "kimera-vio/pipeline/Pipeline.h"
 #include "rclcpp/rclcpp.hpp"

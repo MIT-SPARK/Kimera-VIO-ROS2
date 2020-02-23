@@ -22,7 +22,7 @@ BackendInterface::~BackendInterface()
 void BackendInterface::publishBackendOutput(
   const VIO::BackendOutput::Ptr & output)
 {
-  // CHECK_NOTNULL(output);
+  CHECK_NOTNULL(output);
   publishTf(output);
   // if (odometry_pub_.getNumSubscribers() > 0) {
   //   publishState(output);
@@ -38,7 +38,7 @@ void BackendInterface::publishBackendOutput(
 
 void BackendInterface::publishTf(const VIO::BackendOutput::Ptr & output)
 {
-  // CHECK_NOTNULL(output);
+  CHECK_NOTNULL(output);
 
   const VIO::Timestamp & timestamp = output->timestamp_;
   const gtsam::Pose3 & pose = output->W_State_Blkf_.pose_;

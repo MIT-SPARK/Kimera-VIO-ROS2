@@ -18,6 +18,7 @@
   <depend>kimera_vio</depend>
   <depend>libboost-dev</depend>
   <depend>libgflags-dev</depend>
+  <depend>libgoogle-glog-dev</depend>
   <depend>libopencv-dev</depend>
   <depend>message_filters</depend>
   <depend>rclcpp</depend>
