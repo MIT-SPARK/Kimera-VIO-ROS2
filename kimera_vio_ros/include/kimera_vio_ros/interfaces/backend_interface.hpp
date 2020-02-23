@@ -6,6 +6,9 @@
 #include "nav_msgs/msg/odometry.hpp"
 #include "tf2_ros/transform_broadcaster.h"
 
+using Odometry = nav_msgs::msg::Odometry;
+using TransformStamped = geometry_msgs::msg::TransformStamped;
+
 namespace kimera_vio_ros
 {
 namespace interfaces
@@ -38,7 +41,7 @@ private:
 
 private:
   tf2_ros::TransformBroadcaster tf_broadcaster_;
-  rclcpp::Publisher<nav_msgs::msg::Odometry>::SharedPtr odometry_pub_;
+  rclcpp::Publisher<Odometry>::SharedPtr odometry_pub_;
 
 };
 

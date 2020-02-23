@@ -12,7 +12,7 @@ BackendInterface::BackendInterface(
   tf_broadcaster_{node}
 {
   rclcpp::QoS qos(rclcpp::KeepLast(10));
-  odometry_pub_ = node.create_publisher<nav_msgs::msg::Odometry>("odometry", qos);
+  odometry_pub_ = node.create_publisher<Odometry>("odometry", qos);
 }
 
 BackendInterface::~BackendInterface()
@@ -53,7 +53,7 @@ void BackendInterface::publishState(
     gtsam::sub(output->state_covariance_lkf_, 6, 9, 6, 9);
 
   // First publish odometry estimate
-  nav_msgs::msg::Odometry odometry_msg;
+  Odometry odometry_msg;
 
   // Create header.
   odometry_msg.header.stamp = rclcpp::Time(ts);
@@ -121,7 +121,7 @@ void BackendInterface::publishTf(const VIO::BackendOutput::Ptr & output)
   const gtsam::Pose3 & pose = output->W_State_Blkf_.pose_;
   const gtsam::Quaternion & quaternion = pose.rotation().toQuaternion();
   // Publish base_link TF.
-  geometry_msgs::msg::TransformStamped odom_tf;
+  TransformStamped odom_tf;
   odom_tf.header.stamp = rclcpp::Time(timestamp);
   odom_tf.header.frame_id = world_frame_id_;
   odom_tf.child_frame_id = base_link_frame_id_;
