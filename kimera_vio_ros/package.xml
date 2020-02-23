@@ -21,6 +21,7 @@
   <depend>libgoogle-glog-dev</depend>
   <depend>libopencv-dev</depend>
   <depend>message_filters</depend>
+  <depend>nav_msgs</depend>
   <depend>rclcpp</depend>
   <depend>rclcpp_components</depend>
   <depend>sensor_msgs</depend>

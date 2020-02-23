@@ -3,6 +3,7 @@
 
 #include "geometry_msgs/msg/transform_stamped.hpp"
 #include "kimera_vio_ros/interfaces/base_interface.hpp"
+#include "nav_msgs/msg/odometry.hpp"
 #include "tf2_ros/transform_broadcaster.h"
 
 namespace kimera_vio_ros
@@ -30,13 +31,14 @@ protected:
   VIO::ThreadsafeQueue<VIO::BackendOutput::Ptr> backend_output_queue_;
 
 private:
+  void publishState(const VIO::BackendOutput::Ptr & output) const;
   void publishTf(const VIO::BackendOutput::Ptr & output);
   // void publishTimeHorizonPointCloud(const VIO::BackendOutput::Ptr& output) const;
-  // void publishState(const VIO::BackendOutput::Ptr& output) const;
   // void publishImuBias(const VIO::BackendOutput::Ptr& output) const;
 
 private:
   tf2_ros::TransformBroadcaster tf_broadcaster_;
+  rclcpp::Publisher<nav_msgs::msg::Odometry>::SharedPtr odometry_pub_;
 
 };
 
