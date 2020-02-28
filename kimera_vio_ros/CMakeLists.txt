@@ -52,6 +52,7 @@ add_library(${library_name} SHARED
   src/interfaces/image_interface.cpp
   src/interfaces/imu_interface.cpp
   src/interfaces/stereo_interface.cpp
+  src/interfaces/stereo_vio_interface.cpp
 )
 ament_target_dependencies(${library_name}
   ${dependencies})
@@ -79,10 +80,10 @@ install(TARGETS ${executable_names} ${library_name}
 
 install(DIRECTORY include/
   DESTINATION include)
-# install(DIRECTORY launch
-#   DESTINATION share/${PROJECT_NAME})
-# install(DIRECTORY param
-#   DESTINATION share/${PROJECT_NAME})
+install(DIRECTORY launch
+  DESTINATION share/${PROJECT_NAME})
+install(DIRECTORY param
+  DESTINATION share/${PROJECT_NAME})
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

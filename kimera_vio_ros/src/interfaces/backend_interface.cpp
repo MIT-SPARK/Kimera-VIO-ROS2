@@ -9,10 +9,10 @@ BackendInterface::BackendInterface(
   rclcpp::Node & node)
 : BaseInterface(node),
   backend_output_queue_("Backend output"),
-  tf_broadcaster_{node}
+  tf_broadcaster_{node_}
 {
   rclcpp::QoS qos(rclcpp::KeepLast(10));
-  odometry_pub_ = node.create_publisher<Odometry>("odometry", qos);
+  odometry_pub_ = node_.create_publisher<Odometry>("odometry", qos);
 }
 
 BackendInterface::~BackendInterface()

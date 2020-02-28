@@ -22,14 +22,14 @@ ImuInterface::ImuInterface(
       pipeline_,
       std::placeholders::_1));
 
-  callback_group_imu_ = node.create_callback_group(
+  callback_group_imu_ = node_.create_callback_group(
     rclcpp::callback_group::CallbackGroupType::MutuallyExclusive);
   auto imu_opt = rclcpp::SubscriptionOptions();
   imu_opt.callback_group = callback_group_imu_;
 
   std::string imu_topic = "imu";
   auto qos = rclcpp::SensorDataQoS();
-  imu_sub_ = node.create_subscription<Imu>(
+  imu_sub_ = node_.create_subscription<Imu>(
     imu_topic,
     qos,
     std::bind(

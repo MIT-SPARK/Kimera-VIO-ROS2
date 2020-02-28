@@ -11,12 +11,12 @@ namespace kimera_vio_ros
 namespace interfaces
 {
 
-class ImuInterface : public BaseInterface
+class ImuInterface : virtual public BaseInterface
 {
 public:
   ImuInterface(
     rclcpp::Node & node);
-  ~ImuInterface();
+  virtual ~ImuInterface();
 
 private:
   void imu_cb(const Imu::SharedPtr imu_msg);

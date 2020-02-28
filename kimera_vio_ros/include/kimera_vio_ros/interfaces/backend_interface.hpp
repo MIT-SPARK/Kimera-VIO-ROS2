@@ -14,12 +14,12 @@ namespace kimera_vio_ros
 namespace interfaces
 {
 
-class BackendInterface : public BaseInterface
+class BackendInterface : virtual public BaseInterface
 {
 public:
   BackendInterface(
     rclcpp::Node & node);
-  ~BackendInterface();
+  virtual ~BackendInterface();
 
 public:
   inline void callbackBackendOutput(const VIO::BackendOutput::Ptr & output)

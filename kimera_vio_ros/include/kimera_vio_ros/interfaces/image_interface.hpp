@@ -12,12 +12,12 @@ namespace kimera_vio_ros
 namespace interfaces
 {
 
-class ImageInterface : public BaseInterface
+class ImageInterface : virtual public BaseInterface
 {
 public:
   ImageInterface(
     rclcpp::Node & node);
-  ~ImageInterface();
+  virtual ~ImageInterface();
 
 protected:
   const cv::Mat readRosImage(const Image::ConstSharedPtr & img_msg);

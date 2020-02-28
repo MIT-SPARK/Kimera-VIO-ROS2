@@ -6,15 +6,28 @@ namespace components
 {
 
 StereoVio::StereoVio(
-  const rclcpp::NodeOptions & options)
-: Node("stereo_vio", options),
-  interfaces::StereoInterface(*dynamic_cast<Node *>(this)),
-  interfaces::ImuInterface(*dynamic_cast<Node *>(this))
+  const rclcpp::NodeOptions & node_options)
+: Node("stereo_vio", node_options)
 {
+  init();
+}
+
+StereoVio::StereoVio(
+  const std::string & node_name,
+  const std::string & ns,
+  const rclcpp::NodeOptions & node_options)
+: Node(node_name, ns, node_options)
+{
+  init();
 }
 
 StereoVio::~StereoVio()
 {
+}
+
+void StereoVio::init()
+{
+  vio_node_ = std::make_unique<interfaces::StereoVioInterface>(*this);
 }
 
 }  // namespace components

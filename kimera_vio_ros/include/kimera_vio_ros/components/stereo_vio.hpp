@@ -1,24 +1,28 @@
 #ifndef KIMERA_ROS__COMPONENTS__STEREO_VIO_HPP_
 #define KIMERA_ROS__COMPONENTS__STEREO_VIO_HPP_
 
-#include "kimera_vio_ros/interfaces/imu_interface.hpp"
-#include "kimera_vio_ros/interfaces/stereo_interface.hpp"
+#include "kimera_vio_ros/interfaces/stereo_vio_interface.hpp"
 
 namespace kimera_vio_ros
 {
 namespace components
 {
 
-class StereoVio
-  : public rclcpp::Node,
-  public interfaces::StereoInterface,
-  public interfaces::ImuInterface
+class StereoVio : public rclcpp::Node
 {
 public:
-  explicit StereoVio(
-    const rclcpp::NodeOptions & options = rclcpp::NodeOptions());
-  ~StereoVio();
+  StereoVio(
+    const rclcpp::NodeOptions & node_options=rclcpp::NodeOptions());
+  StereoVio(
+    const std::string & node_name,
+    const std::string & ns,
+    const rclcpp::NodeOptions & node_options=rclcpp::NodeOptions());
+  virtual ~StereoVio();
 
+private:
+  void init();
+
+  std::unique_ptr<interfaces::BaseInterface> vio_node_;
 };
 
 }  // namespace components

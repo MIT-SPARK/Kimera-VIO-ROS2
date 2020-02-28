@@ -12,12 +12,12 @@ namespace kimera_vio_ros
 namespace interfaces
 {
 
-class StereoInterface : public ImageInterface
+class StereoInterface : virtual public ImageInterface
 {
 public:
   StereoInterface(
     rclcpp::Node & node);
-  ~StereoInterface();
+  virtual ~StereoInterface();
 
 private:
   void stereo_cb(
