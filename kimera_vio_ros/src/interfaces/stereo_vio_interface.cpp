@@ -6,7 +6,7 @@ namespace interfaces
 {
 
 StereoVioInterface::StereoVioInterface(
-  rclcpp::Node & node)
+  rclcpp::Node::SharedPtr & node)
 : BaseInterface(node),
   ImageInterface(node),
   StereoInterface(node),

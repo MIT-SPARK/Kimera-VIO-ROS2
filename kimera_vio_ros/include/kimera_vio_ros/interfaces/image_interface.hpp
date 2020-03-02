@@ -16,7 +16,7 @@ class ImageInterface : virtual public BaseInterface
 {
 public:
   ImageInterface(
-    rclcpp::Node & node);
+    rclcpp::Node::SharedPtr & node);
   virtual ~ImageInterface();
 
 protected:

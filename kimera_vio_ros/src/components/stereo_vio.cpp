@@ -27,7 +27,8 @@ StereoVio::~StereoVio()
 
 void StereoVio::init()
 {
-  vio_node_ = std::make_unique<interfaces::StereoVioInterface>(*this);
+  rclcpp::Node::SharedPtr node = std::shared_ptr<rclcpp::Node>(this);
+  vio_node_ = std::make_unique<interfaces::StereoVioInterface>(node);
 }
 
 }  // namespace components

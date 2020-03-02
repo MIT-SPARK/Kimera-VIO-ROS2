@@ -16,7 +16,7 @@ class StereoInterface : virtual public ImageInterface
 {
 public:
   StereoInterface(
-    rclcpp::Node & node);
+    rclcpp::Node::SharedPtr & node);
   virtual ~StereoInterface();
 
 private:

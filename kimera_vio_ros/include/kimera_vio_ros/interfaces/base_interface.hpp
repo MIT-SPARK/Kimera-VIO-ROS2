@@ -15,11 +15,11 @@ class BaseInterface : public VIO::DataProviderInterface
 {
 public:
   BaseInterface(
-    rclcpp::Node & node);
+    rclcpp::Node::SharedPtr & node);
   virtual ~BaseInterface();
 
 protected:
-  rclcpp::Node & node_;
+  rclcpp::Node::SharedPtr node_;
   VIO::Pipeline::Ptr pipeline_;
 
   std::string base_link_frame_id_;

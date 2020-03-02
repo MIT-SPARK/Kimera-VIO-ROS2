@@ -15,7 +15,7 @@ class ImuInterface : virtual public BaseInterface
 {
 public:
   ImuInterface(
-    rclcpp::Node & node);
+    rclcpp::Node::SharedPtr & node);
   virtual ~ImuInterface();
 
 private:

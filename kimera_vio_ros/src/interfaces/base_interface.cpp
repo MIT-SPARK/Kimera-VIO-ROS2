@@ -6,16 +6,18 @@ namespace interfaces
 {
 
 BaseInterface::BaseInterface(
-  rclcpp::Node & node)
+  rclcpp::Node::SharedPtr & node)
 : VIO::DataProviderInterface(),
-  node_(node),
+  node_(nullptr),
   pipeline_(nullptr)
 {
-  base_link_frame_id_ = node_.declare_parameter(
+  node_ = node;
+
+  base_link_frame_id_ = node->declare_parameter(
     "frame_id.base_link", "base_link");
-  map_frame_id_ = node_.declare_parameter(
+  map_frame_id_ = node->declare_parameter(
     "frame_id.map", "map");
-  world_frame_id_ = node_.declare_parameter(
+  world_frame_id_ = node->declare_parameter(
     "frame_id.world", "world");
 
   pipeline_.reset(new VIO::Pipeline(this->pipeline_params_));

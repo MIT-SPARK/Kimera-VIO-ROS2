@@ -6,7 +6,7 @@ namespace interfaces
 {
 
 ImageInterface::ImageInterface(
-  rclcpp::Node & node)
+  rclcpp::Node::SharedPtr & node)
 : BaseInterface(node)
 {
 }

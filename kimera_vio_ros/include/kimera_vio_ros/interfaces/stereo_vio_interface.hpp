@@ -19,7 +19,7 @@ class StereoVioInterface
 {
 public:
   StereoVioInterface(
-    rclcpp::Node & node);
+    rclcpp::Node::SharedPtr & node);
   ~StereoVioInterface();
 
 };

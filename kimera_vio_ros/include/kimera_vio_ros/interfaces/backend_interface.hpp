@@ -18,7 +18,7 @@ class BackendInterface : virtual public BaseInterface
 {
 public:
   BackendInterface(
-    rclcpp::Node & node);
+    rclcpp::Node::SharedPtr & node);
   virtual ~BackendInterface();
 
 public:
