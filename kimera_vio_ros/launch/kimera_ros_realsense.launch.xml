@@ -1,0 +1,23 @@
+<launch>
+  <group>
+    <arg name="dataset_name" default="RealSense_IR"/>
+    <arg name="parallel" default="false" />
+    <arg name="use_sim_time" default="True" />
+
+    <arg name="log_output" default="false"/>
+    <!-- <arg name="log_output_path"
+    default="$(find kimera_vio_ros)/output_logs/"
+    if="$(var log_output)"/> -->
+
+    <!-- Subscribed Topics -->
+    <let name="cam_topic.left"  value="/camera/infra1/image_rect_raw"/>
+    <let name="cam_topic.right" value="/camera/infra2/image_rect_raw"/>
+    <let name="imu_topic"       value="/camera/imu/sample"/>
+
+    <!-- Frame IDs for Odometry -->
+    <let name="frame_ids.base_link" value="camera_link" />
+
+    <!-- Launch actual pipeline -->
+    <include file="$(find-pkg-share kimera_vio_ros)/launch/kimera_vio_ros.launch.xml"/>
+  </group>
+</launch>
