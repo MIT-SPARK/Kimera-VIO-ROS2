@@ -11,6 +11,13 @@ BackendInterface::BackendInterface(
   backend_output_queue_("Backend output"),
   tf_broadcaster_{node_}
 {
+  pipeline_->registerBackendOutputCallback(
+    std::bind(
+      // &BackendInterface::callbackBackendOutput,
+      &BackendInterface::publishBackendOutput,
+      this,
+      std::placeholders::_1));
+
   rclcpp::QoS qos(rclcpp::KeepLast(10));
   odometry_pub_ = node->create_publisher<Odometry>("odometry", qos);
 }
