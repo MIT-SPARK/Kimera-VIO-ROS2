@@ -30,9 +30,9 @@
   <arg name="imu_topic"           default="/imu0"/>
 
   <!-- Frame IDs -->
-  <arg name="frame_ids.base_link" default="base_link"/>
-  <arg name="frame_ids.map"       default="map"/>
-  <arg name="frame_ids.world"     default="world"/>
+  <arg name="frame_id.base_link" default="base_link"/>
+  <arg name="frame_id.map"       default="map"/>
+  <arg name="frame_id.world"     default="world"/>
 
   <!-- General parameters -->
   <arg name="verbosity"    default="0" />
@@ -71,10 +71,10 @@
     <param name="use_lcd"           value="$(var use_lcd)"/>
 
     <!-- Frame IDs for Odometry -->
-    <param name="frame_ids">
-        <param name="base_link" value="$(var frame_ids.base_link)"/>
-        <param name="map"       value="$(var frame_ids.map)"/>
-        <param name="world"     value="$(var frame_ids.world)"/>
+    <param name="frame_id">
+        <param name="base_link" value="$(var frame_id.base_link)"/>
+        <param name="map"       value="$(var frame_id.map)"/>
+        <param name="world"     value="$(var frame_id.world)"/>
     </param>
 
     <!-- Subscriber topics -->

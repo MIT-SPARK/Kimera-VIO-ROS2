@@ -15,7 +15,7 @@
     <let name="imu_topic"       value="/camera/imu/sample"/>
 
     <!-- Frame IDs for Odometry -->
-    <let name="frame_ids.base_link" value="camera_link" />
+    <let name="frame_id.base_link" value="camera_link" />
 
     <!-- Launch actual pipeline -->
     <include file="$(find-pkg-share kimera_vio_ros)/launch/kimera_vio_ros.launch.xml"/>
