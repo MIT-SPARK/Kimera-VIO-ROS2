@@ -1,6 +1,8 @@
 #ifndef KIMERA_ROS__INTERFACES__BASE_INTERFACE_HPP_
 #define KIMERA_ROS__INTERFACES__BASE_INTERFACE_HPP_
 
+#include <future>
+
 #include "glog/logging.h"
 #include "kimera-vio/dataprovider/DataProviderInterface.h"
 #include "kimera-vio/pipeline/Pipeline.h"
@@ -17,6 +19,7 @@ public:
   BaseInterface(
     rclcpp::Node::SharedPtr & node);
   virtual ~BaseInterface();
+  void start();
 
 protected:
   rclcpp::Node::SharedPtr node_;
@@ -25,6 +28,9 @@ protected:
   std::string base_link_frame_id_;
   std::string map_frame_id_;
   std::string world_frame_id_;
+
+private:
+  std::future<bool> handle_pipeline_;
 };
 
 }  // namespace interfaces

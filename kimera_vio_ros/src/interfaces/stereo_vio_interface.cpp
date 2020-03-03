@@ -13,6 +13,7 @@ StereoVioInterface::StereoVioInterface(
   ImuInterface(node),
   BackendInterface(node)
 {
+  BaseInterface::start();
 }
 
 StereoVioInterface::~StereoVioInterface()

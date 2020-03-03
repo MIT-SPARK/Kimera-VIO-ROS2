@@ -26,6 +26,14 @@ BaseInterface::BaseInterface(
 BaseInterface::~BaseInterface()
 {
   pipeline_->shutdown();
+  handle_pipeline_.get();
+}
+
+void BaseInterface::start()
+{
+  handle_pipeline_ = std::async(std::launch::async,
+                                &VIO::Pipeline::spin,
+                                pipeline_);
 }
 
 }  // namespace interfaces
