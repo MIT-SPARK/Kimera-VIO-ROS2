@@ -3,7 +3,7 @@
     <arg name="dataset_name" default="RealSense_IR"/>
     <arg name="parallel" default="true" />
     <arg name="use_sim_time" default="false" />
-    <arg name="rectified" default="true" />
+    <arg name="rectified" default="false" />
 
     <arg name="log_output" default="false"/>
     <!-- <arg name="log_output_path"

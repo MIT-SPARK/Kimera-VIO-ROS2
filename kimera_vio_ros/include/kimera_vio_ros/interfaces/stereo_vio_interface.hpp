@@ -13,8 +13,8 @@ namespace interfaces
 class StereoVioInterface
     :
 //  public ImageInterface,
-  public StereoInterface,
   public ImuInterface,
+  public StereoInterface,
   public BackendInterface
 {
 public:

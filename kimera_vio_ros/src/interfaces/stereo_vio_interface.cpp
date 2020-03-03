@@ -9,8 +9,8 @@ StereoVioInterface::StereoVioInterface(
   rclcpp::Node::SharedPtr & node)
 : BaseInterface(node),
   ImageInterface(node),
-  StereoInterface(node),
   ImuInterface(node),
+  StereoInterface(node),
   BackendInterface(node)
 {
   BaseInterface::start();

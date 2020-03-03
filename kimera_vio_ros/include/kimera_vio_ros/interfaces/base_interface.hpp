@@ -2,7 +2,6 @@
 #define KIMERA_ROS__INTERFACES__BASE_INTERFACE_HPP_
 
 #include <future>
-#include <unistd.h>
 
 #include "glog/logging.h"
 #include "kimera-vio/dataprovider/DataProviderInterface.h"
