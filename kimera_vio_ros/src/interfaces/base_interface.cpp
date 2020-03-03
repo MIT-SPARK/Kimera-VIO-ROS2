@@ -31,6 +31,8 @@ BaseInterface::~BaseInterface()
 
 void BaseInterface::start()
 {
+  //TODO: work around data race for parsing camera params
+  usleep(1000000);
   handle_pipeline_ = std::async(std::launch::async,
                                 &VIO::Pipeline::spin,
                                 pipeline_);
