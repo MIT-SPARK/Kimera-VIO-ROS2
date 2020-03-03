@@ -13,3 +13,7 @@ repositories:
   #   type: git
   #   url: https://github.com/ToniRV/kimera_rviz_markers.git
   #   version: master
+  ros2/launch:
+    type: git
+    url: https://github.com/ros2/launch.git
+    version: f243fc6b3bcd276c194151e6933cda90761b1944
