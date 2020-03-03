@@ -1,8 +1,8 @@
 <launch>
   <group>
     <arg name="dataset_name" default="RealSense_IR"/>
-    <arg name="parallel" default="false" />
-    <arg name="use_sim_time" default="True" />
+    <arg name="parallel" default="true" />
+    <arg name="use_sim_time" default="false" />
     <arg name="rectified" default="true" />
 
     <arg name="log_output" default="false"/>
