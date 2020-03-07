@@ -17,6 +17,9 @@ BaseInterface::BaseInterface(
 {
   node_ = node;
 
+  callback_group_pipeline_ = node->create_callback_group(
+    rclcpp::callback_group::CallbackGroupType::MutuallyExclusive);
+
   base_link_frame_id_ = node->declare_parameter(
     "frame_id.base_link", "base_link");
   map_frame_id_ = node->declare_parameter(
@@ -50,7 +53,8 @@ void BaseInterface::start()
       10ms,
       std::bind(
         &VIO::Pipeline::spin,
-        pipeline_));
+        pipeline_),
+      callback_group_pipeline_);
   }
 
 }
