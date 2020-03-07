@@ -12,19 +12,17 @@ namespace interfaces
 BaseInterface::BaseInterface(
   rclcpp::Node::SharedPtr & node)
 : VIO::DataProviderInterface(),
-  node_(nullptr),
+  node_(node),
   pipeline_(nullptr)
 {
-  node_ = node;
-
-  callback_group_pipeline_ = node->create_callback_group(
+  callback_group_pipeline_ = node_->create_callback_group(
     rclcpp::callback_group::CallbackGroupType::MutuallyExclusive);
 
-  base_link_frame_id_ = node->declare_parameter(
+  base_link_frame_id_ = node_->declare_parameter(
     "frame_id.base_link", "base_link");
-  map_frame_id_ = node->declare_parameter(
+  map_frame_id_ = node_->declare_parameter(
     "frame_id.map", "map");
-  world_frame_id_ = node->declare_parameter(
+  world_frame_id_ = node_->declare_parameter(
     "frame_id.world", "world");
 
   pipeline_.reset(new VIO::Pipeline(this->pipeline_params_));
