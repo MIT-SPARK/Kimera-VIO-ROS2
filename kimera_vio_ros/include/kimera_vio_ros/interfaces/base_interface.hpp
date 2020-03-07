@@ -31,6 +31,8 @@ protected:
 
 private:
   std::future<bool> handle_pipeline_;
+  std::future<bool> handle_shutdown_;
+  rclcpp::TimerBase::SharedPtr pipeline_timer_;
 };
 
 }  // namespace interfaces

@@ -1,4 +1,8 @@
+#include <chrono>
+
 #include "kimera_vio_ros/interfaces/base_interface.hpp"
+
+using namespace std::chrono_literals;
 
 namespace kimera_vio_ros
 {
@@ -26,15 +30,29 @@ BaseInterface::BaseInterface(
 BaseInterface::~BaseInterface()
 {
   pipeline_->shutdown();
-  handle_pipeline_.get();
+  if (this->pipeline_params_.parallel_run_) {
+    handle_shutdown_.get();
+    handle_pipeline_.get();
+  }
 }
 
 void BaseInterface::start()
 {
-  //TODO: work around data race for parsing camera params
-  handle_pipeline_ = std::async(std::launch::async,
-                                &VIO::Pipeline::spin,
-                                pipeline_);
+  if (this->pipeline_params_.parallel_run_){
+    handle_pipeline_ = std::async(std::launch::async,
+                                  &VIO::Pipeline::spin,
+                                  pipeline_);
+    handle_shutdown_ = std::async(std::launch::async,
+                                 &VIO::Pipeline::shutdownWhenFinished,
+                                  pipeline_);
+  } else{
+    pipeline_timer_ = node_->create_wall_timer(
+      10ms,
+      std::bind(
+          &VIO::Pipeline::spin,
+          pipeline_));
+  }
+
 }
 
 }  // namespace interfaces
