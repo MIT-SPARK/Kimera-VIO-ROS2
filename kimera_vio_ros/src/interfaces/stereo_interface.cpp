@@ -7,7 +7,7 @@ namespace interfaces
 
 StereoInterface::StereoInterface(
   rclcpp::Node::SharedPtr & node)
-  : BaseInterface(node),
+: BaseInterface(node),
   ImageInterface(node),
   frame_count_(VIO::FrameId(0)),
   last_stereo_timestamp_(0)
@@ -45,11 +45,11 @@ StereoInterface::StereoInterface(
   // TODO: Assign message filter subscribers to callback_group_stereo_
   // Pending: https://github.com/ros2/message_filters/issues/45
   l_sub_ = std::make_shared<message_filters::Subscriber<Image>>(
-      node_,
+    node_,
     left_topic,
     qos.get_rmw_qos_profile());
   r_sub_ = std::make_shared<message_filters::Subscriber<Image>>(
-      node_,
+    node_,
     right_topic,
     qos.get_rmw_qos_profile());
   exact_sync_ = std::make_shared<ExactSync>(

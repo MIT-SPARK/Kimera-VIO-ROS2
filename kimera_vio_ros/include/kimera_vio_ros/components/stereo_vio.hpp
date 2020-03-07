@@ -12,11 +12,11 @@ class StereoVio : public rclcpp::Node
 {
 public:
   StereoVio(
-    const rclcpp::NodeOptions & node_options=rclcpp::NodeOptions());
+    const rclcpp::NodeOptions & node_options = rclcpp::NodeOptions());
   StereoVio(
     const std::string & node_name,
     const std::string & ns,
-    const rclcpp::NodeOptions & node_options=rclcpp::NodeOptions());
+    const rclcpp::NodeOptions & node_options = rclcpp::NodeOptions());
   virtual ~StereoVio();
 
 private:
