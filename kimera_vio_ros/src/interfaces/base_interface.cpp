@@ -34,7 +34,7 @@ BaseInterface::~BaseInterface()
 {
   pipeline_->shutdown();
   if (this->pipeline_params_.parallel_run_) {
-    handle_shutdown_.get();
+//    handle_shutdown_.get();
     handle_pipeline_.get();
   }
 }
@@ -45,9 +45,9 @@ void BaseInterface::start()
     handle_pipeline_ = std::async(std::launch::async,
         &VIO::Pipeline::spin,
         pipeline_);
-    handle_shutdown_ = std::async(std::launch::async,
-        &VIO::Pipeline::shutdownWhenFinished,
-        pipeline_);
+//    handle_shutdown_ = std::async(std::launch::async,
+//        &VIO::Pipeline::shutdownWhenFinished,
+//        pipeline_);
   } else {
     pipeline_timer_ = node_->create_wall_timer(
       10ms,
