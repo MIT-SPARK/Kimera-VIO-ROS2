@@ -33,7 +33,6 @@ private:
   rclcpp::callback_group::CallbackGroup::SharedPtr callback_group_pipeline_;
   rclcpp::TimerBase::SharedPtr pipeline_timer_;
   std::future<bool> handle_pipeline_;
-  std::future<bool> handle_shutdown_;
 };
 
 }  // namespace interfaces
