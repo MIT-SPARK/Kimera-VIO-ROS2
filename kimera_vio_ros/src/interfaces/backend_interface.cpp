@@ -19,7 +19,8 @@ BackendInterface::BackendInterface(
       std::placeholders::_1));
 
   rclcpp::QoS qos(rclcpp::KeepLast(10));
-  odometry_pub_ = node->create_publisher<Odometry>("odometry", qos);
+  odometry_pub_ = node_->create_publisher<Odometry>("odometry", qos);
+  pointcloud_pub_ = node_->create_publisher<PointCloud2>("time_horizon_pointcloud", qos);
 }
 
 BackendInterface::~BackendInterface()
@@ -38,9 +39,9 @@ void BackendInterface::publishBackendOutput(
   // if (imu_bias_pub_.getNumSubscribers() > 0) {
   //   publishImuBias(output);
   // }
-  // if (pointcloud_pub_.getNumSubscribers() > 0) {
-  //   publishTimeHorizonPointCloud(output);
-  // }
+   if (pointcloud_pub_->get_subscription_count() > 0) {
+     publishTimeHorizonPointCloud(output);
+   }
 }
 
 
@@ -141,6 +142,90 @@ void BackendInterface::publishTf(const VIO::BackendOutput::Ptr & output)
   odom_tf.transform.rotation.y = quaternion.y();
   odom_tf.transform.rotation.z = quaternion.z();
   tf_broadcaster_.sendTransform(odom_tf);
+}
+
+void BackendInterface::publishTimeHorizonPointCloud(
+    const VIO::BackendOutput::Ptr& output) const {
+  CHECK(output);
+  const VIO::Timestamp & timestamp = output->timestamp_;
+  const VIO::PointsWithIdMap& points_with_id =
+      output->landmarks_with_id_map_;
+  const VIO::LmkIdToLmkTypeMap& lmk_id_to_lmk_type_map =
+      output->lmk_id_to_lmk_type_map_;
+
+  if (points_with_id.size() == 0) {
+    // No points to visualize.
+    return;
+  }
+
+  PointCloud2::UniquePtr pc_msg(new PointCloud2);
+  pc_msg->header.stamp = rclcpp::Time(timestamp);
+  pc_msg->header.frame_id = world_frame_id_;
+  pc_msg->width = points_with_id.size();
+  pc_msg->height = 1;
+  pc_msg->is_dense = true;
+  pc_msg->point_step = 3 * sizeof(float) + 3 * sizeof(uint8_t);
+  pc_msg->row_step = pc_msg->point_step * pc_msg->width;
+  pc_msg->is_dense = true;
+
+  sensor_msgs::PointCloud2Modifier modifier(*pc_msg);
+  modifier.setPointCloud2FieldsByString(2, "xyz", "rgb");
+  modifier.resize(pc_msg->width);
+
+  sensor_msgs::PointCloud2Iterator<float> iter_x(*pc_msg, "x");
+  sensor_msgs::PointCloud2Iterator<float> iter_y(*pc_msg, "y");
+  sensor_msgs::PointCloud2Iterator<float> iter_z(*pc_msg, "z");
+  sensor_msgs::PointCloud2Iterator<uint8_t> iter_r(*pc_msg, "r");
+  sensor_msgs::PointCloud2Iterator<uint8_t> iter_g(*pc_msg, "g");
+  sensor_msgs::PointCloud2Iterator<uint8_t> iter_b(*pc_msg, "b");
+
+  bool color_the_cloud = false;
+  if (lmk_id_to_lmk_type_map.size() != 0) {
+    color_the_cloud = true;
+    CHECK_EQ(points_with_id.size(), lmk_id_to_lmk_type_map.size());
+  }
+
+  // Populate cloud structure with 3D points.
+  size_t i = 0;
+  for (const std::pair<VIO::LandmarkId, gtsam::Point3>& id_point : points_with_id) {
+    const gtsam::Point3 point_3d = id_point.second;
+    *iter_x = static_cast<float>(point_3d.x());
+    *iter_y = static_cast<float>(point_3d.y());
+    *iter_z = static_cast<float>(point_3d.z());
+
+    if (color_the_cloud) {
+      DCHECK(lmk_id_to_lmk_type_map.find(id_point.first) !=
+             lmk_id_to_lmk_type_map.end());
+      switch (lmk_id_to_lmk_type_map.at(id_point.first)) {
+        case VIO::LandmarkType::SMART: {
+          *iter_r = 0;
+          *iter_g = 255;
+          *iter_b = 0;
+          break;
+        }
+        case VIO::LandmarkType::PROJECTION: {
+          *iter_r = 0;
+          *iter_g = 0;
+          *iter_b = 255;
+          break;
+        }
+        default: {
+          *iter_r = 255;
+          *iter_g = 0;
+          *iter_b = 0;
+          break;
+        }
+      }
+    }
+    ++iter_x;
+    ++iter_y;
+    ++iter_z;
+    ++iter_r;
+    ++iter_g;
+    ++iter_b;
+    i++;
+  }
+  pointcloud_pub_->publish(std::move(pc_msg));
 }
 
 }  // namespace interfaces

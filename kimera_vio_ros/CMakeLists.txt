@@ -21,6 +21,8 @@ find_package(kimera_common REQUIRED)
 find_package(kimera_vio REQUIRED)
 find_package(message_filters REQUIRED)
 find_package(nav_msgs REQUIRED)
+find_package(pcl_conversions REQUIRED)
+find_package(pcl_msgs REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_components REQUIRED)
 find_package(sensor_msgs REQUIRED)
@@ -38,6 +40,8 @@ set(dependencies
   kimera_vio
   message_filters
   nav_msgs
+  pcl_conversions
+  pcl_msgs
   rclcpp
   rclcpp_components
   sensor_msgs
