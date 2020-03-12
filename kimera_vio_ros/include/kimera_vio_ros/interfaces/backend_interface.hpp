@@ -4,7 +4,6 @@
 #include "geometry_msgs/msg/transform_stamped.hpp"
 #include "kimera_vio_ros/interfaces/base_interface.hpp"
 #include "nav_msgs/msg/odometry.hpp"
-#include "tf2_ros/transform_broadcaster.h"
 #include "sensor_msgs/msg/point_cloud2.hpp"
 #include "sensor_msgs/point_cloud2_iterator.hpp"
 
@@ -43,7 +42,6 @@ private:
   // void publishImuBias(const VIO::BackendOutput::Ptr& output) const;
 
 private:
-  tf2_ros::TransformBroadcaster tf_broadcaster_;
   rclcpp::Publisher<Odometry>::SharedPtr odometry_pub_;
   rclcpp::Publisher<PointCloud2>::SharedPtr pointcloud_pub_;
 

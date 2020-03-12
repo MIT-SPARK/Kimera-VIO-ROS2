@@ -7,6 +7,9 @@
 #include "kimera-vio/dataprovider/DataProviderInterface.h"
 #include "kimera-vio/pipeline/Pipeline.h"
 #include "rclcpp/rclcpp.hpp"
+#include "tf2_ros/buffer.h"
+#include "tf2_ros/transform_broadcaster.h"
+#include "tf2_ros/transform_listener.h"
 
 namespace kimera_vio_ros
 {
@@ -28,6 +31,10 @@ protected:
   std::string base_link_frame_id_;
   std::string map_frame_id_;
   std::string world_frame_id_;
+
+  std::shared_ptr<tf2_ros::Buffer> buffer_;
+  std::shared_ptr<tf2_ros::TransformBroadcaster> tf_broadcaster_;
+  std::shared_ptr<tf2_ros::TransformListener> tf_listener_;
 
 private:
   rclcpp::callback_group::CallbackGroup::SharedPtr callback_group_pipeline_;

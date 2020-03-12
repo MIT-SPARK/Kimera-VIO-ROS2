@@ -8,8 +8,7 @@ namespace interfaces
 BackendInterface::BackendInterface(
   rclcpp::Node::SharedPtr & node)
 : BaseInterface(node),
-  backend_output_queue_("Backend output"),
-  tf_broadcaster_{node_}
+  backend_output_queue_("Backend output")
 {
   pipeline_->registerBackendOutputCallback(
     std::bind(
@@ -141,7 +140,7 @@ void BackendInterface::publishTf(const VIO::BackendOutput::Ptr & output)
   odom_tf.transform.rotation.x = quaternion.x();
   odom_tf.transform.rotation.y = quaternion.y();
   odom_tf.transform.rotation.z = quaternion.z();
-  tf_broadcaster_.sendTransform(odom_tf);
+  tf_broadcaster_->sendTransform(odom_tf);
 }
 
 void BackendInterface::publishTimeHorizonPointCloud(
