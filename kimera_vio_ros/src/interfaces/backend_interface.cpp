@@ -30,7 +30,7 @@ BackendInterface::~BackendInterface()
 void BackendInterface::publishBackendOutput(
   const VIO::BackendOutput::Ptr & output)
 {
-  CHECK_NOTNULL(output);
+  CHECK(output);
   publishTf(output);
   if (odometry_pub_->get_subscription_count() > 0) {
     publishState(output);
@@ -47,7 +47,7 @@ void BackendInterface::publishBackendOutput(
 void BackendInterface::publishState(
   const VIO::BackendOutput::Ptr & output) const
 {
-  CHECK_NOTNULL(output);
+  CHECK(output);
   // Get latest estimates for odometry.
   const VIO::Timestamp & ts = output->timestamp_;
   const gtsam::Pose3 & pose = output->W_State_Blkf_.pose_;
@@ -122,7 +122,7 @@ void BackendInterface::publishState(
 
 void BackendInterface::publishTf(const VIO::BackendOutput::Ptr & output)
 {
-  CHECK_NOTNULL(output);
+  CHECK(output);
 
   const VIO::Timestamp & timestamp = output->timestamp_;
   const gtsam::Pose3 & pose = output->W_State_Blkf_.pose_;
