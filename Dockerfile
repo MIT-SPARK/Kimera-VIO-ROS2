@@ -21,8 +21,8 @@ RUN vcs import src < overlay.repos
 ENV WRAPPER_WS /opt/wrapper_ws
 RUN mkdir -p $WRAPPER_WS/src
 WORKDIR $WRAPPER_WS
-# COPY ./install/wrapper.repos ./
-# RUN vcs import src < wrapper.repos
+COPY ./install/wrapper.repos ./
+RUN vcs import src < wrapper.repos
 COPY ./ src/MIT-SPARK/Kimera-VIO-ROS2
 
 # copy manifests for caching
