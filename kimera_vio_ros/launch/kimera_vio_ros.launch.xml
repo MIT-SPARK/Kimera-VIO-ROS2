@@ -22,7 +22,7 @@
   <!-- Specify the absolute path to the vocabulary file. -->
   <!-- This is usually in the VIO directory (VIO/vocabulary/ORBvoc.yml). -->
   <!-- <arg name="path_to_vocab" default="$(find-pkg-share kimera_vio)/vocabulary/ORBvoc.yml"/> -->
-  <arg name="path_to_vocab" default="/home/ruffsl/ws/spark3/overlay_ws/src/MIT-SPARK/Kimera-VIO/vocabulary/ORBvoc.yml"/>
+  <arg name="path_to_vocab" default="/opt/overlay_ws/src/MIT-SPARK/Kimera-VIO/vocabulary/ORBvoc.yml"/>
 
   <!-- Subscribed Topics -->
   <arg name="cam_topic.left"      default="/cam0/image_raw"/>
