@@ -77,8 +77,5 @@ docker run -it --rm --privileged \
     --ros-args -p depth0.emitter:=0
 ```
 
-> Note: This may fail until this is resolved: [issue](https://github.com/osrf/docker_images/issues/385)
-> Using the Dockerfile as a build guid, this package can run from the host as well.
-
 > Note: `--net=host --ipc=host --pid=host` is used to allow ROS2/DDS to communicate across containers.
 > More details on connectivity across containers can be found [here](https://answers.ros.org/question/296828/ros2-connectivity-across-docker-containers-via-host-driver/).
