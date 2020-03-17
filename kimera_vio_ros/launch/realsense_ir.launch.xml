@@ -3,13 +3,12 @@
     <arg name="dataset_name" default="RealSense_IR"/>
     <arg name="parallel" default="true" />
     <arg name="use_sim_time" default="false" />
+    <!-- TODO: rectified should be true for realsense
+      as the realsense node publishes rectified images -->
     <arg name="rectified" default="false" />
     <arg name="use_lcd" default="true"/>
 
     <arg name="log_output" default="false"/>
-    <!-- <arg name="log_output_path"
-    default="$(find kimera_vio_ros)/output_logs/"
-    if="$(var log_output)"/> -->
 
     <!-- Subscribed Topics -->
     <let name="cam_topic.left"  value="/camera/infra1/image_rect_raw"/>
