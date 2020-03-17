@@ -17,9 +17,17 @@
     <let name="imu_topic"       value="/camera/imu/sample"/>
 
     <!-- Frame IDs for Odometry -->
-    <let name="frame_id.base_link" value="camera_link" />
+    <let name="frame_id.base_link" value="base_link" />
 
     <!-- Launch actual pipeline -->
     <include file="$(find-pkg-share kimera_vio_ros)/launch/kimera_vio_ros.launch.xml"/>
   </group>
+
+  <!-- Kimera assumes the imu is fundamentally the `base_link` refrence frame.
+    To keep the TF tree a tree, we can just publish a static TF
+    that is just the inverse of the camera_link to camera_imu_optical_frame tf.
+    E.g: `$ ros2 run tf2_ros tf2_echo camera_imu_optical_frame camera_link` -->
+  <node name="base_link_to_camera_link" pkg="tf2_ros" exec="static_transform_publisher"
+    args="-0.006 0.005 0.012 0.500 -0.500 0.500 0.500 base_link camera_link" />
+
 </launch>
