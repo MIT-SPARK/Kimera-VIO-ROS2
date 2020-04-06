@@ -1,4 +1,5 @@
 #include "kimera_vio_ros/interfaces/backend_interface.hpp"
+#include "kimera_vio_ros/utils/geometry.hpp"
 
 namespace kimera_vio_ros
 {
@@ -133,13 +134,7 @@ void BackendInterface::publishTf(const VIO::BackendOutput::Ptr & output)
   odom_tf.header.frame_id = world_frame_id_;
   odom_tf.child_frame_id = base_link_frame_id_;
 
-  odom_tf.transform.translation.x = pose.x();
-  odom_tf.transform.translation.y = pose.y();
-  odom_tf.transform.translation.z = pose.z();
-  odom_tf.transform.rotation.w = quaternion.w();
-  odom_tf.transform.rotation.x = quaternion.x();
-  odom_tf.transform.rotation.y = quaternion.y();
-  odom_tf.transform.rotation.z = quaternion.z();
+  utils::poseToMsgTF(pose, &odom_tf.transform);
   tf_broadcaster_->sendTransform(odom_tf);
 }
 
