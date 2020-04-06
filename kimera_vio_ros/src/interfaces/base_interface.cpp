@@ -33,6 +33,13 @@ BaseInterface::BaseInterface(
   world_frame_id_ = node_->declare_parameter(
     "frame_id.world", "world");
 
+  std::string vio_params_folder_path_;
+  vio_params_folder_path_ = node_->declare_parameter(
+      "vio_params.folder_path", "");
+  CHECK(!vio_params_folder_path_.empty());
+  vio_params_ = std::make_shared<VIO::VioParams>(
+      vio_params_folder_path_);
+
   vio_pipeline_.reset();
   vio_pipeline_ = VIO::make_unique<VIO::Pipeline>(*vio_params_);
 }
