@@ -14,15 +14,15 @@ StereoInterface::StereoInterface(
 {
   this->registerLeftFrameCallback(
     std::bind(
-      &VIO::Pipeline::fillLeftFrameQueue,
-      pipeline_,
-      std::placeholders::_1));
+        &VIO::Pipeline::fillLeftFrameQueue,
+        vio_pipeline_,
+        std::placeholders::_1));
 
   this->registerRightFrameCallback(
     std::bind(
-      &VIO::Pipeline::fillRightFrameQueue,
-      pipeline_,
-      std::placeholders::_1));
+        &VIO::Pipeline::fillRightFrameQueue,
+        vio_pipeline_,
+        std::placeholders::_1));
 
   callback_group_stereo_ = node->create_callback_group(
     rclcpp::callback_group::CallbackGroupType::MutuallyExclusive);

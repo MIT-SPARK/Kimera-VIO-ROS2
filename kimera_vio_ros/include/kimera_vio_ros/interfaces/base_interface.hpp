@@ -26,7 +26,7 @@ public:
 
 protected:
   rclcpp::Node::SharedPtr node_;
-  VIO::Pipeline::Ptr pipeline_;
+  VIO::Pipeline::Ptr vio_pipeline_;
 
   std::string base_link_frame_id_;
   std::string map_frame_id_;

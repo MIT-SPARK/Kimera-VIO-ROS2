@@ -10,7 +10,7 @@ BackendInterface::BackendInterface(
 : BaseInterface(node),
   backend_output_queue_("Backend output")
 {
-  pipeline_->registerBackendOutputCallback(
+  vio_pipeline_->registerBackendOutputCallback(
     std::bind(
       // &BackendInterface::callbackBackendOutput,
       &BackendInterface::publishBackendOutput,

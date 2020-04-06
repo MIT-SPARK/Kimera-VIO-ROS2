@@ -13,7 +13,7 @@ BaseInterface::BaseInterface(
   rclcpp::Node::SharedPtr & node)
 : VIO::DataProviderInterface(),
   node_(node),
-  pipeline_(nullptr),
+  vio_pipeline_(nullptr),
   buffer_(nullptr),
   tf_broadcaster_(nullptr),
   tf_listener_(nullptr)
@@ -32,12 +32,12 @@ BaseInterface::BaseInterface(
   world_frame_id_ = node_->declare_parameter(
     "frame_id.world", "world");
 
-  pipeline_.reset(new VIO::Pipeline(this->pipeline_params_));
+  vio_pipeline_.reset(new VIO::Pipeline(this->pipeline_params_));
 }
 
 BaseInterface::~BaseInterface()
 {
-  pipeline_->shutdown();
+  vio_pipeline_->shutdown();
   if (this->pipeline_params_.parallel_run_) {
     handle_pipeline_.get();
   }
@@ -49,13 +49,13 @@ void BaseInterface::start()
     handle_pipeline_ = std::async(
       std::launch::async,
       &VIO::Pipeline::spin,
-      pipeline_);
+        vio_pipeline_);
   } else {
     pipeline_timer_ = node_->create_wall_timer(
       10ms,
       std::bind(
         &VIO::Pipeline::spin,
-        pipeline_),
+          vio_pipeline_),
       callback_group_pipeline_);
   }
 
