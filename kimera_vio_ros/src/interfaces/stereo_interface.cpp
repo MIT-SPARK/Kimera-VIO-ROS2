@@ -30,37 +30,77 @@ StereoInterface::StereoInterface(
   stereo_opt.callback_group = callback_group_stereo_;
 
   int queue_size_ = 10;
-  auto qos = rclcpp::SensorDataQoS();
-  std::string left_topic = "left_cam";
-  std::string right_topic = "right_cam";
+
+  auto info_qos = rclcpp::SystemDefaultsQoS();
+  std::string left_image_topic = "left/image";
+  std::string right_image_topic = "right/image";
+  left_info_sub_ = std::make_shared<message_filters::Subscriber<CameraInfo>>(
+      node_,
+      left_image_topic,
+      info_qos.get_rmw_qos_profile());
+  right_info_sub_ = std::make_shared<message_filters::Subscriber<CameraInfo>>(
+      node_,
+      right_image_topic,
+      info_qos.get_rmw_qos_profile());
+  exact_info_sync_ = std::make_shared<ExactInfoSync>(
+      ExactInfoPolicy(queue_size_), *left_info_sub_, *right_info_sub_);
+  exact_info_sync_->registerCallback(&StereoInterface::camera_info_cb, this);
+
+
+
+  auto image_qos = rclcpp::SensorDataQoS();
+  std::string left_info_topic = "left/camera_info";
+  std::string right_info_topic = "right/camera_info";
 
   // TODO: Perhaps switch to image_transport to support more transports
   // std::string transport = "raw";
   // image_transport::TransportHints hints(node, transport);
   // left_sub_.subscribe(node, left_topic, hints.getTransport(), qos.get_rmw_qos_profile());
   // right_sub_.subscribe(node, right_topic, hints.getTransport(), qos.get_rmw_qos_profile());
-  // exact_sync_ = std::make_shared<ExactSync>(
-  //   ExactPolicy(queue_size_), left_sub_, right_sub_);
+  // exact_image_sync_ = std::make_shared<ExactImageSync>(
+  //   ExactImagePolicy(queue_size_), left_sub_, right_sub_);
 
   // TODO: Assign message filter subscribers to callback_group_stereo_
   // Pending: https://github.com/ros2/message_filters/issues/45
-  l_sub_ = std::make_shared<message_filters::Subscriber<Image>>(
+  left_image_sub_ = std::make_shared<message_filters::Subscriber<Image>>(
     node_,
-    left_topic,
-    qos.get_rmw_qos_profile());
-  r_sub_ = std::make_shared<message_filters::Subscriber<Image>>(
+    left_image_topic,
+    image_qos.get_rmw_qos_profile());
+  right_image_sub_ = std::make_shared<message_filters::Subscriber<Image>>(
     node_,
-    right_topic,
-    qos.get_rmw_qos_profile());
-  exact_sync_ = std::make_shared<ExactSync>(
-    ExactPolicy(queue_size_), *l_sub_, *r_sub_);
-
-  exact_sync_->registerCallback(&StereoInterface::stereo_cb, this);
-
+    right_image_topic,
+    image_qos.get_rmw_qos_profile());
+  exact_image_sync_ = std::make_shared<ExactImageSync>(
+    ExactImagePolicy(queue_size_), *left_image_sub_, *right_image_sub_);
+  exact_image_sync_->registerCallback(&StereoInterface::stereo_cb, this);
 }
 
 StereoInterface::~StereoInterface()
 {
+}
+
+void StereoInterface::camera_info_cb(
+    const CameraInfo::ConstSharedPtr & left_msg,
+    const CameraInfo::ConstSharedPtr & right_msg) {
+  CHECK_GE(vio_params_->camera_params_.size(), 2u);
+
+  // Initialize CameraParams for pipeline.
+  msgCamInfoToCameraParams(
+      left_msg, &vio_params_->camera_params_.at(0));
+  msgCamInfoToCameraParams(
+      right_msg, &vio_params_->camera_params_.at(1));
+
+  vio_params_->camera_params_.at(0).print();
+  vio_params_->camera_params_.at(1).print();
+
+  // Unregister this callback as it is no longer needed.
+  RCLCPP_INFO(node_->get_logger(),
+      "Unregistering CameraInfo subscribers as data has been received.");
+  left_info_sub_->unsubscribe();
+  right_info_sub_->unsubscribe();
+
+  // Signal the correct reception of camera info
+  camera_info_received_ = true;
 }
 
 void StereoInterface::stereo_cb(
