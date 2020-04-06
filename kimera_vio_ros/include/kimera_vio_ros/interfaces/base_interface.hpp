@@ -33,7 +33,7 @@ protected:
   std::string map_frame_id_;
   std::string world_frame_id_;
 
-  std::shared_ptr<tf2_ros::Buffer> buffer_;
+  std::shared_ptr<tf2_ros::Buffer> tf_buffer_;
   std::shared_ptr<tf2_ros::TransformBroadcaster> tf_broadcaster_;
   std::shared_ptr<tf2_ros::TransformListener> tf_listener_;
 

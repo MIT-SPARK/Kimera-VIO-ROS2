@@ -15,13 +15,13 @@ BaseInterface::BaseInterface(
   node_(node),
   vio_params_(nullptr),
   vio_pipeline_(nullptr),
-  buffer_(nullptr),
+  tf_buffer_(nullptr),
   tf_broadcaster_(nullptr),
   tf_listener_(nullptr)
 {
-  buffer_ = std::make_shared<tf2_ros::Buffer>(node_->get_clock());
+  tf_buffer_ = std::make_shared<tf2_ros::Buffer>(node_->get_clock());
   tf_broadcaster_ = std::make_shared<tf2_ros::TransformBroadcaster>(node_);
-  tf_listener_ = std::make_shared<tf2_ros::TransformListener>(*buffer_, node_, false);
+  tf_listener_ = std::make_shared<tf2_ros::TransformListener>(*tf_buffer_, node_, false);
 
   callback_group_pipeline_ = node_->create_callback_group(
     rclcpp::callback_group::CallbackGroupType::MutuallyExclusive);
