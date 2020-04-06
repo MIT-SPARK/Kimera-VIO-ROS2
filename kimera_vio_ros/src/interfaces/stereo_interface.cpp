@@ -71,9 +71,9 @@ void StereoInterface::stereo_cb(
   rclcpp::Time right_stamp(right_msg->header.stamp);
   if (left_stamp.nanoseconds() > last_stereo_timestamp_.nanoseconds()) {
     static const VIO::CameraParams & left_cam_info =
-      pipeline_params_.camera_params_.at(0);
+      vio_params_->camera_params_.at(0);
     static const VIO::CameraParams & right_cam_info =
-      pipeline_params_.camera_params_.at(1);
+      vio_params_->camera_params_.at(1);
 
     const VIO::Timestamp & timestamp_left = left_stamp.nanoseconds();
     const VIO::Timestamp & timestamp_right = right_stamp.nanoseconds();
