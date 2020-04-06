@@ -13,9 +13,11 @@
     <!-- Subscribed Topics -->
     <let name="topic.left.image"    value="/camera/infra1/image_rect_raw"/>
     <let name="topic.right.image"   value="/camera/infra2/image_rect_raw"/>
+    <let name="topic.imu.data"      value="/camera/imu/sample"/>
+
+    <let name="use_camera_info"     value="true"/>
     <let name="topic.left.info"     value="/camera/infra1/camera_info"/>
     <let name="topic.right.info"    value="/camera/infra2/camera_info"/>
-    <let name="topic.imu.data"      value="/camera/imu/sample"/>
 
     <!-- Frame IDs for Odometry -->
     <let name="frame_id.base_link" value="base_link" />

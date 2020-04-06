@@ -27,9 +27,11 @@
   <!-- Subscribed Topics -->
   <arg name="topic.left.image"    default="/cam0/image_raw"/>
   <arg name="topic.right.image"   default="/cam1/image_raw"/>
+  <arg name="topic.imu.data"      default="/imu0"/>
+
+  <arg name="use_camera_info" default="true"/>
   <arg name="topic.left.info"     default="/cam0/camera_info"/>
   <arg name="topic.right.info"    default="/cam1/camera_info"/>
-  <arg name="topic.imu.data"      default="/imu0"/>
 
   <!-- Frame IDs -->
   <arg name="frame_id.base_link" default="base_link"/>
@@ -84,9 +86,11 @@
     <!-- Subscriber topics -->
     <remap from="left/image"        to="$(var topic.left.image)"/>
     <remap from="right/image"       to="$(var topic.right.image)"/>
+    <remap from="imu/data"          to="$(var topic.imu.data)"/>
+
+    <param name="use_camera_info"   value="$(var use_camera_info)"/>
     <remap from="left/camera_info"  to="$(var topic.left.info)"/>
     <remap from="right/camera_info" to="$(var topic.right.info)"/>
-    <remap from="imu/data"          to="$(var topic.imu.data)"/>
 
     <!-- Remap publisher topics -->
     <remap from="odometry"                to="odometry"/>
