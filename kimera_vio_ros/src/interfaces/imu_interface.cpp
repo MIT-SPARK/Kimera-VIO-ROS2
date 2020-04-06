@@ -13,13 +13,13 @@ ImuInterface::ImuInterface(
   this->registerImuSingleCallback(
     std::bind(
         &VIO::Pipeline::fillSingleImuQueue,
-        vio_pipeline_,
+        vio_pipeline_.get(),
         std::placeholders::_1));
 
   this->registerImuMultiCallback(
     std::bind(
         &VIO::Pipeline::fillMultiImuQueue,
-        vio_pipeline_,
+        vio_pipeline_.get(),
         std::placeholders::_1));
 
   callback_group_imu_ = node->create_callback_group(

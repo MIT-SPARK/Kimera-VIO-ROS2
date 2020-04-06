@@ -13,8 +13,8 @@ BaseInterface::BaseInterface(
   rclcpp::Node::SharedPtr & node)
 : VIO::DataProviderInterface(),
   node_(node),
-  vio_pipeline_(nullptr),
   vio_params_(nullptr),
+  vio_pipeline_(nullptr),
   buffer_(nullptr),
   tf_broadcaster_(nullptr),
   tf_listener_(nullptr)
@@ -58,13 +58,13 @@ void BaseInterface::start()
     handle_pipeline_ = std::async(
         std::launch::async,
         &VIO::Pipeline::spin,
-        vio_pipeline_);
+        vio_pipeline_.get());
   } else {
     pipeline_timer_ = node_->create_wall_timer(
       10ms,
       std::bind(
           &VIO::Pipeline::spin,
-          vio_pipeline_),
+          vio_pipeline_.get()),
       callback_group_pipeline_);
   }
 

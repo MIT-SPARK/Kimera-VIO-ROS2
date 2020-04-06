@@ -15,13 +15,13 @@ StereoInterface::StereoInterface(
   this->registerLeftFrameCallback(
     std::bind(
         &VIO::Pipeline::fillLeftFrameQueue,
-        vio_pipeline_,
+        vio_pipeline_.get(),
         std::placeholders::_1));
 
   this->registerRightFrameCallback(
     std::bind(
         &VIO::Pipeline::fillRightFrameQueue,
-        vio_pipeline_,
+        vio_pipeline_.get(),
         std::placeholders::_1));
 
   callback_group_stereo_ = node->create_callback_group(
