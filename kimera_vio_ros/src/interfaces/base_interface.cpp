@@ -33,7 +33,8 @@ BaseInterface::BaseInterface(
   world_frame_id_ = node_->declare_parameter(
     "frame_id.world", "world");
 
-  vio_pipeline_.reset(new VIO::Pipeline(*vio_params_));
+  vio_pipeline_.reset();
+  vio_pipeline_ = VIO::make_unique<VIO::Pipeline>(*vio_params_);
 }
 
 BaseInterface::~BaseInterface()
