@@ -29,7 +29,7 @@
   <arg name="topic.right.image"   default="/cam1/image_raw"/>
   <arg name="topic.imu.data"      default="/imu0"/>
 
-  <arg name="use_camera_info" default="true"/>
+  <arg name="use_camera_info"     default="true"/>
   <arg name="topic.left.info"     default="/cam0/camera_info"/>
   <arg name="topic.right.info"    default="/cam1/camera_info"/>
 
@@ -40,23 +40,15 @@
 
   <!-- General parameters -->
   <arg name="verbosity"    default="0" />
-  <!-- 0: for vanilla VIO, 1: for regular VIO -->
-  <arg name="backend_type" default="1" />
   <!-- Visualize pipeline output in OpenCV. -->
   <!-- Note that this is duplicated from the flags file -->
   <arg name="visualize"    default="false" />
-  <arg name="rectified"    default="true" />
+  <!-- <arg name="rectified"    default="true" /> -->
 
   <!-- Launch main node  -->
   <node name="kimera_vio_ros" pkg="kimera_vio_ros" exec="stereo_vio_node"
     output="screen" ns="kimera_vio_ros"
-    args="--left_cam_params_path=$(var params_folder)/LeftCameraParams.yaml \
-        --right_cam_params_path=$(var params_folder)/RightCameraParams.yaml \
-        --imu_params_path=$(var params_folder)/ImuParams.yaml \
-        --backend_params_path=$(var params_folder)/regularVioParameters.yaml \
-        --frontend_params_path=$(var params_folder)/trackerParameters.yaml \
-        --use_lcd=$(var use_lcd) \
-        --lcd_params_path=$(var params_folder)/LCDParameters.yaml \
+    args="--use_lcd=$(var use_lcd) \
         --vocabulary_path=$(var path_to_vocab) \
         --flagfile=$(var params_folder)/flags/Mesher.flags \
         --flagfile=$(var params_folder)/flags/VioBackEnd.flags \
@@ -66,12 +58,10 @@
         --colorlogtostderr 1 \
         --log_prefix 1 \
         --v=$(var verbosity) \
-        --backend_type=$(var backend_type) \
         --log_output=$(var log_output) \
         --output_path=$(var log_output_path) \
-        --visualize=$(var visualize) \
-        --parallel_run=$(var parallel) \
-        --images_rectified=$(var rectified)">
+        --visualize=$(var visualize)">
+    <param name="params_folder"  value="$(var params_folder)"/>
 
     <param name="use_sim_time"      value="$(var use_sim_time)"/>
     <param name="use_lcd"           value="$(var use_lcd)"/>
