@@ -29,14 +29,14 @@ private:
 
 private:
   rclcpp::callback_group::CallbackGroup::SharedPtr callback_group_stereo_;
-  
+
   typedef message_filters::sync_policies::ExactTime<Image, Image> ExactImagePolicy;
   typedef message_filters::Synchronizer<ExactImagePolicy> ExactImageSync;
   std::shared_ptr<ExactImageSync> exact_image_sync_;
   std::shared_ptr<message_filters::Subscriber<Image>> left_image_sub_;
   std::shared_ptr<message_filters::Subscriber<Image>> right_image_sub_;
   // image_transport::SubscriberFilter left_sub_, right_sub_;
-  
+
   typedef message_filters::sync_policies::ExactTime<CameraInfo, CameraInfo> ExactInfoPolicy;
   typedef message_filters::Synchronizer<ExactInfoPolicy> ExactInfoSync;
   std::shared_ptr<ExactInfoSync> exact_info_sync_;

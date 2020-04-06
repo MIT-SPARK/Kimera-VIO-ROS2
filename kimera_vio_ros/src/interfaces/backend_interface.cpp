@@ -39,9 +39,9 @@ void BackendInterface::publishBackendOutput(
   // if (imu_bias_pub_.getNumSubscribers() > 0) {
   //   publishImuBias(output);
   // }
-   if (pointcloud_pub_->get_subscription_count() > 0) {
-     publishTimeHorizonPointCloud(output);
-   }
+  if (pointcloud_pub_->get_subscription_count() > 0) {
+    publishTimeHorizonPointCloud(output);
+  }
 }
 
 
@@ -139,13 +139,14 @@ void BackendInterface::publishTf(const VIO::BackendOutput::Ptr & output)
 }
 
 void BackendInterface::publishTimeHorizonPointCloud(
-    const VIO::BackendOutput::Ptr& output) const {
+  const VIO::BackendOutput::Ptr & output) const
+{
   CHECK(output);
   const VIO::Timestamp & timestamp = output->timestamp_;
-  const VIO::PointsWithIdMap& points_with_id =
-      output->landmarks_with_id_map_;
-  const VIO::LmkIdToLmkTypeMap& lmk_id_to_lmk_type_map =
-      output->lmk_id_to_lmk_type_map_;
+  const VIO::PointsWithIdMap & points_with_id =
+    output->landmarks_with_id_map_;
+  const VIO::LmkIdToLmkTypeMap & lmk_id_to_lmk_type_map =
+    output->lmk_id_to_lmk_type_map_;
 
   if (points_with_id.size() == 0) {
     // No points to visualize.
@@ -181,7 +182,7 @@ void BackendInterface::publishTimeHorizonPointCloud(
 
   // Populate cloud structure with 3D points.
   size_t i = 0;
-  for (const std::pair<VIO::LandmarkId, gtsam::Point3>& id_point : points_with_id) {
+  for (const std::pair<VIO::LandmarkId, gtsam::Point3> & id_point : points_with_id) {
     const gtsam::Point3 point_3d = id_point.second;
     *iter_x = static_cast<float>(point_3d.x());
     *iter_y = static_cast<float>(point_3d.y());
@@ -189,26 +190,26 @@ void BackendInterface::publishTimeHorizonPointCloud(
 
     if (color_the_cloud) {
       DCHECK(lmk_id_to_lmk_type_map.find(id_point.first) !=
-             lmk_id_to_lmk_type_map.end());
+        lmk_id_to_lmk_type_map.end());
       switch (lmk_id_to_lmk_type_map.at(id_point.first)) {
         case VIO::LandmarkType::SMART: {
-          *iter_r = 0;
-          *iter_g = 255;
-          *iter_b = 0;
-          break;
-        }
+            *iter_r = 0;
+            *iter_g = 255;
+            *iter_b = 0;
+            break;
+          }
         case VIO::LandmarkType::PROJECTION: {
-          *iter_r = 0;
-          *iter_g = 0;
-          *iter_b = 255;
-          break;
-        }
+            *iter_r = 0;
+            *iter_g = 0;
+            *iter_b = 255;
+            break;
+          }
         default: {
-          *iter_r = 255;
-          *iter_g = 0;
-          *iter_b = 0;
-          break;
-        }
+            *iter_r = 255;
+            *iter_g = 0;
+            *iter_b = 0;
+            break;
+          }
       }
     }
     ++iter_x;

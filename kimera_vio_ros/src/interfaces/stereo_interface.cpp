@@ -14,15 +14,15 @@ StereoInterface::StereoInterface(
 {
   this->registerLeftFrameCallback(
     std::bind(
-        &VIO::Pipeline::fillLeftFrameQueue,
-        vio_pipeline_.get(),
-        std::placeholders::_1));
+      &VIO::Pipeline::fillLeftFrameQueue,
+      vio_pipeline_.get(),
+      std::placeholders::_1));
 
   this->registerRightFrameCallback(
     std::bind(
-        &VIO::Pipeline::fillRightFrameQueue,
-        vio_pipeline_.get(),
-        std::placeholders::_1));
+      &VIO::Pipeline::fillRightFrameQueue,
+      vio_pipeline_.get(),
+      std::placeholders::_1));
 
   callback_group_stereo_ = node->create_callback_group(
     rclcpp::callback_group::CallbackGroupType::MutuallyExclusive);
@@ -33,24 +33,24 @@ StereoInterface::StereoInterface(
 
   bool use_camera_info_;
   use_camera_info_ = node_->declare_parameter(
-      "use_camera_info", true);
-  if (use_camera_info_){
+    "use_camera_info", true);
+  if (use_camera_info_) {
     RCLCPP_INFO(node_->get_logger(),
-        "Using online camera parameters instead of YAML parameter files.");
+      "Using online camera parameters instead of YAML parameter files.");
 
     auto info_qos = rclcpp::SystemDefaultsQoS();
     std::string left_info_topic = "left/camera_info";
     std::string right_info_topic = "right/camera_info";
     left_info_sub_ = std::make_shared<message_filters::Subscriber<CameraInfo>>(
-        node_,
-        left_info_topic,
-        info_qos.get_rmw_qos_profile());
+      node_,
+      left_info_topic,
+      info_qos.get_rmw_qos_profile());
     right_info_sub_ = std::make_shared<message_filters::Subscriber<CameraInfo>>(
-        node_,
-        right_info_topic,
-        info_qos.get_rmw_qos_profile());
+      node_,
+      right_info_topic,
+      info_qos.get_rmw_qos_profile());
     exact_info_sync_ = std::make_shared<ExactInfoSync>(
-        ExactInfoPolicy(queue_size_), *left_info_sub_, *right_info_sub_);
+      ExactInfoPolicy(queue_size_), *left_info_sub_, *right_info_sub_);
     exact_info_sync_->registerCallback(&StereoInterface::camera_info_cb, this);
   }
 
@@ -86,22 +86,23 @@ StereoInterface::~StereoInterface()
 }
 
 void StereoInterface::camera_info_cb(
-    const CameraInfo::ConstSharedPtr & left_msg,
-    const CameraInfo::ConstSharedPtr & right_msg) {
+  const CameraInfo::ConstSharedPtr & left_msg,
+  const CameraInfo::ConstSharedPtr & right_msg)
+{
   CHECK_GE(vio_params_->camera_params_.size(), 2u);
 
   // Initialize CameraParams for pipeline.
   msgCamInfoToCameraParams(
-      left_msg, &vio_params_->camera_params_.at(0));
+    left_msg, &vio_params_->camera_params_.at(0));
   msgCamInfoToCameraParams(
-      right_msg, &vio_params_->camera_params_.at(1));
+    right_msg, &vio_params_->camera_params_.at(1));
 
   vio_params_->camera_params_.at(0).print();
   vio_params_->camera_params_.at(1).print();
 
   // Unregister this callback as it is no longer needed.
   RCLCPP_INFO(node_->get_logger(),
-      "Unregistering CameraInfo subscribers as data has been received.");
+    "Unregistering CameraInfo subscribers as data has been received.");
   left_info_sub_->unsubscribe();
   right_info_sub_->unsubscribe();
 

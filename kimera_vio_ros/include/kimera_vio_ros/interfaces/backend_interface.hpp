@@ -38,7 +38,7 @@ protected:
 private:
   void publishState(const VIO::BackendOutput::Ptr & output) const;
   void publishTf(const VIO::BackendOutput::Ptr & output);
-  void publishTimeHorizonPointCloud(const VIO::BackendOutput::Ptr& output) const;
+  void publishTimeHorizonPointCloud(const VIO::BackendOutput::Ptr & output) const;
   // void publishImuBias(const VIO::BackendOutput::Ptr& output) const;
 
 private:

@@ -35,10 +35,10 @@ BaseInterface::BaseInterface(
 
   std::string vio_params_folder_path_;
   vio_params_folder_path_ = node_->declare_parameter(
-      "vio_params.folder_path", "");
+    "vio_params.folder_path", "");
   CHECK(!vio_params_folder_path_.empty());
   vio_params_ = std::make_shared<VIO::VioParams>(
-      vio_params_folder_path_);
+    vio_params_folder_path_);
 
   vio_pipeline_.reset();
   vio_pipeline_ = VIO::make_unique<VIO::Pipeline>(*vio_params_);
@@ -56,15 +56,15 @@ void BaseInterface::start()
 {
   if (vio_params_->parallel_run_) {
     handle_pipeline_ = std::async(
-        std::launch::async,
-        &VIO::Pipeline::spin,
-        vio_pipeline_.get());
+      std::launch::async,
+      &VIO::Pipeline::spin,
+      vio_pipeline_.get());
   } else {
     pipeline_timer_ = node_->create_wall_timer(
       10ms,
       std::bind(
-          &VIO::Pipeline::spin,
-          vio_pipeline_.get()),
+        &VIO::Pipeline::spin,
+        vio_pipeline_.get()),
       callback_group_pipeline_);
   }
 

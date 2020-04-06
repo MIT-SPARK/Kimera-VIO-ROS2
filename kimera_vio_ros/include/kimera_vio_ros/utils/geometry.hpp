@@ -10,9 +10,9 @@ namespace kimera_vio_ros
 namespace utils
 {
 
-void msgTFtoPose(const geometry_msgs::msg::Transform& tf, gtsam::Pose3* pose);
+void msgTFtoPose(const geometry_msgs::msg::Transform & tf, gtsam::Pose3 * pose);
 
-void poseToMsgTF(const gtsam::Pose3& pose, geometry_msgs::msg::Transform* tf);
+void poseToMsgTF(const gtsam::Pose3 & pose, geometry_msgs::msg::Transform * tf);
 
 }  // namespace utils
 }  // namespace kimera_vio_ros

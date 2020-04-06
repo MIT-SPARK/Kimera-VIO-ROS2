@@ -23,8 +23,8 @@ public:
 
 protected:
   void msgCamInfoToCameraParams(
-      const CameraInfo::ConstSharedPtr & cam_info,
-      VIO::CameraParams* cam_params);
+    const CameraInfo::ConstSharedPtr & cam_info,
+    VIO::CameraParams * cam_params);
   const cv::Mat readRosImage(const Image::ConstSharedPtr & img_msg);
 
 };
