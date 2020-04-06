@@ -27,7 +27,7 @@ ImuInterface::ImuInterface(
   auto imu_opt = rclcpp::SubscriptionOptions();
   imu_opt.callback_group = callback_group_imu_;
 
-  std::string imu_topic = "imu";
+  std::string imu_topic = "imu/data";
   auto qos = rclcpp::SensorDataQoS();
   imu_sub_ = node->create_subscription<Imu>(
     imu_topic,
