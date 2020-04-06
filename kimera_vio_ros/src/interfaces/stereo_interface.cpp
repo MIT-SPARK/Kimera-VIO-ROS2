@@ -32,15 +32,15 @@ StereoInterface::StereoInterface(
   int queue_size_ = 10;
 
   auto info_qos = rclcpp::SystemDefaultsQoS();
-  std::string left_image_topic = "left/image";
-  std::string right_image_topic = "right/image";
+  std::string left_info_topic = "left/camera_info";
+  std::string right_info_topic = "right/camera_info";
   left_info_sub_ = std::make_shared<message_filters::Subscriber<CameraInfo>>(
       node_,
-      left_image_topic,
+      left_info_topic,
       info_qos.get_rmw_qos_profile());
   right_info_sub_ = std::make_shared<message_filters::Subscriber<CameraInfo>>(
       node_,
-      right_image_topic,
+      right_info_topic,
       info_qos.get_rmw_qos_profile());
   exact_info_sync_ = std::make_shared<ExactInfoSync>(
       ExactInfoPolicy(queue_size_), *left_info_sub_, *right_info_sub_);
@@ -49,8 +49,8 @@ StereoInterface::StereoInterface(
 
 
   auto image_qos = rclcpp::SensorDataQoS();
-  std::string left_info_topic = "left/camera_info";
-  std::string right_info_topic = "right/camera_info";
+  std::string left_image_topic = "left/image";
+  std::string right_image_topic = "right/image";
 
   // TODO: Perhaps switch to image_transport to support more transports
   // std::string transport = "raw";
