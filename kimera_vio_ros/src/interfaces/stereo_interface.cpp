@@ -52,6 +52,8 @@ StereoInterface::StereoInterface(
     exact_info_sync_ = std::make_shared<ExactInfoSync>(
       ExactInfoPolicy(queue_size_), *left_info_sub_, *right_info_sub_);
     exact_info_sync_->registerCallback(&StereoInterface::camera_info_cb, this);
+  } else {
+    camera_info_received_ = true;
   }
 
   auto image_qos = rclcpp::SensorDataQoS();
@@ -79,6 +81,8 @@ StereoInterface::StereoInterface(
   exact_image_sync_ = std::make_shared<ExactImageSync>(
     ExactImagePolicy(queue_size_), *left_image_sub_, *right_image_sub_);
   exact_image_sync_->registerCallback(&StereoInterface::stereo_cb, this);
+  left_image_sub_->unsubscribe();
+  right_image_sub_->unsubscribe();
 }
 
 StereoInterface::~StereoInterface()
@@ -108,6 +112,8 @@ void StereoInterface::camera_info_cb(
 
   // Signal the correct reception of camera info
   camera_info_received_ = true;
+  left_image_sub_->subscribe();
+  right_image_sub_->subscribe();
 }
 
 void StereoInterface::stereo_cb(
