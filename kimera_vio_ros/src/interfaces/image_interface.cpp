@@ -29,18 +29,18 @@ void ImageInterface::msgCamInfoToCameraParams(
   CHECK(cam_info->distortion_model == "plumb_bob" ||
     cam_info->distortion_model == "equidistant");
 
-  if (cam_info->distortion_model == "plumb_bob"){
+  if (cam_info->distortion_model == "plumb_bob") {
     // Kimera-VIO terms the plumb bob dist. model the as radtan.
     cam_params->distortion_model_ = "radtan";
     // Kimera-VIO can't take a 6th order radial distortion term.
     CHECK_EQ(cam_info->d.size(), 5);
   } else {
-  cam_params->distortion_model_ = cam_info->distortion_model;
+    cam_params->distortion_model_ = cam_info->distortion_model;
     CHECK_EQ(cam_info->d.size(), 4);
   }
 
   const std::vector<double> & distortion_coeffs =
-      std::vector<double>(cam_info->d.begin(), cam_info->d.begin() + 4);
+    std::vector<double>(cam_info->d.begin(), cam_info->d.begin() + 4);
 
   CHECK_EQ(distortion_coeffs.size(), 4);
   VIO::CameraParams::convertDistortionVectorToMatrix(
