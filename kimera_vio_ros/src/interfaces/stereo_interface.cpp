@@ -44,7 +44,7 @@ StereoInterface::StereoInterface(
     info_qos.get_rmw_qos_profile());
   exact_info_sync_ = std::make_shared<ExactInfoSync>(
     ExactInfoPolicy(queue_size_), *left_info_sub_, *right_info_sub_);
-  exact_info_sync_->registerCallback(&StereoInterface::camera_info_cb, this);
+  exact_info_sync_->registerCallback(&StereoInterface::stereo_info_cb, this);
 
   auto image_qos = rclcpp::SensorDataQoS();
   std::string left_image_topic = "left/image";
@@ -69,7 +69,7 @@ StereoInterface::StereoInterface(
     image_qos.get_rmw_qos_profile());
   exact_image_sync_ = std::make_shared<ExactImageSync>(
     ExactImagePolicy(queue_size_), *left_image_sub_, *right_image_sub_);
-  exact_image_sync_->registerCallback(&StereoInterface::stereo_cb, this);
+  exact_image_sync_->registerCallback(&StereoInterface::stereo_image_cb, this);
 
   bool use_camera_info_;
   use_camera_info_ = node_->declare_parameter("use_camera_info", true);
@@ -92,7 +92,7 @@ StereoInterface::~StereoInterface()
 {
 }
 
-void StereoInterface::camera_info_cb(
+void StereoInterface::stereo_info_cb(
   const CameraInfo::ConstSharedPtr & left_msg,
   const CameraInfo::ConstSharedPtr & right_msg)
 {
@@ -121,7 +121,7 @@ void StereoInterface::camera_info_cb(
   }
 }
 
-void StereoInterface::stereo_cb(
+void StereoInterface::stereo_image_cb(
   const Image::SharedPtr left_msg,
   const Image::SharedPtr right_msg)
 {
@@ -147,7 +147,7 @@ void StereoInterface::stereo_cb(
         frame_count_, timestamp_left, left_cam_info, readRosImage(left_msg)));
     right_frame_callback_(VIO::make_unique<VIO::Frame>(
         frame_count_, timestamp_right, right_cam_info, readRosImage(right_msg)));
-    // LOG_EVERY_N(INFO, 30) << "Done: KimeraVioNode::stereo_cb";
+    // LOG_EVERY_N(INFO, 30) << "Done: KimeraVioNode::stereo_image_cb";
     frame_count_++;
   }
   last_stereo_timestamp_ = left_stamp;

@@ -20,10 +20,10 @@ public:
   virtual ~StereoInterface();
 
 private:
-  void camera_info_cb(
+  void stereo_info_cb(
     const CameraInfo::ConstSharedPtr & left_msg,
     const CameraInfo::ConstSharedPtr & right_msg);
-  void stereo_cb(
+  void stereo_image_cb(
     const Image::SharedPtr left_msg,
     const Image::SharedPtr right_msg);
 
