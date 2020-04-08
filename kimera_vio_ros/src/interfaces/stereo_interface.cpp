@@ -31,35 +31,24 @@ StereoInterface::StereoInterface(
 
   int queue_size_ = 10;
 
-  bool use_camera_info_;
-  use_camera_info_ = node_->declare_parameter(
-    "use_camera_info", true);
-  if (use_camera_info_) {
-    RCLCPP_INFO(node_->get_logger(),
-      "Using online camera parameters instead of YAML parameter files.");
-
-    auto info_qos = rclcpp::SystemDefaultsQoS();
-    std::string left_info_topic = "left/camera_info";
-    std::string right_info_topic = "right/camera_info";
-    left_info_sub_ = std::make_shared<message_filters::Subscriber<CameraInfo>>(
-      node_,
-      left_info_topic,
-      info_qos.get_rmw_qos_profile());
-    right_info_sub_ = std::make_shared<message_filters::Subscriber<CameraInfo>>(
-      node_,
-      right_info_topic,
-      info_qos.get_rmw_qos_profile());
-    exact_info_sync_ = std::make_shared<ExactInfoSync>(
-      ExactInfoPolicy(queue_size_), *left_info_sub_, *right_info_sub_);
-    exact_info_sync_->registerCallback(&StereoInterface::camera_info_cb, this);
-  } else {
-    camera_info_received_ = true;
-  }
+  auto info_qos = rclcpp::SystemDefaultsQoS();
+  std::string left_info_topic = "left/camera_info";
+  std::string right_info_topic = "right/camera_info";
+  left_info_sub_ = std::make_shared<message_filters::Subscriber<CameraInfo>>(
+    node_,
+    left_info_topic,
+    info_qos.get_rmw_qos_profile());
+  right_info_sub_ = std::make_shared<message_filters::Subscriber<CameraInfo>>(
+    node_,
+    right_info_topic,
+    info_qos.get_rmw_qos_profile());
+  exact_info_sync_ = std::make_shared<ExactInfoSync>(
+    ExactInfoPolicy(queue_size_), *left_info_sub_, *right_info_sub_);
+  exact_info_sync_->registerCallback(&StereoInterface::camera_info_cb, this);
 
   auto image_qos = rclcpp::SensorDataQoS();
   std::string left_image_topic = "left/image";
   std::string right_image_topic = "right/image";
-
   // TODO: Perhaps switch to image_transport to support more transports
   // std::string transport = "raw";
   // image_transport::TransportHints hints(node, transport);
@@ -81,8 +70,22 @@ StereoInterface::StereoInterface(
   exact_image_sync_ = std::make_shared<ExactImageSync>(
     ExactImagePolicy(queue_size_), *left_image_sub_, *right_image_sub_);
   exact_image_sync_->registerCallback(&StereoInterface::stereo_cb, this);
-  left_image_sub_->unsubscribe();
-  right_image_sub_->unsubscribe();
+
+  bool use_camera_info_;
+  use_camera_info_ = node_->declare_parameter("use_camera_info", true);
+  if (use_camera_info_) {
+    RCLCPP_INFO(node_->get_logger(),
+      "Using online camera parameters instead of YAML parameter files.");
+    camera_info_received_ = false;
+    left_image_sub_->unsubscribe();
+    right_image_sub_->unsubscribe();
+  } else {
+    RCLCPP_INFO(node_->get_logger(),
+      "Using YAML parameter files instead of online camera parameters.");
+    camera_info_received_ = true;
+    left_info_sub_->unsubscribe();
+    right_info_sub_->unsubscribe();
+  }
 }
 
 StereoInterface::~StereoInterface()
@@ -112,8 +115,10 @@ void StereoInterface::camera_info_cb(
 
   // Signal the correct reception of camera info
   camera_info_received_ = true;
-  left_image_sub_->subscribe();
-  right_image_sub_->subscribe();
+  if (camera_info_received_) {
+    left_image_sub_->subscribe();
+    right_image_sub_->subscribe();
+  }
 }
 
 void StereoInterface::stereo_cb(
