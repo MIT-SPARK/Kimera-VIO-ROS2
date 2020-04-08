@@ -107,15 +107,15 @@ void StereoInterface::stereo_info_cb(
   vio_params_->camera_params_.at(0).print();
   vio_params_->camera_params_.at(1).print();
 
-  // Unregister this callback as it is no longer needed.
-  RCLCPP_INFO(node_->get_logger(),
-    "Unregistering CameraInfo subscribers as data has been received.");
-  left_info_sub_->unsubscribe();
-  right_info_sub_->unsubscribe();
-
   // Signal the correct reception of camera info
   camera_info_received_ = true;
   if (camera_info_received_) {
+    RCLCPP_INFO(node_->get_logger(),
+      "Switching subscriptions from CameraInfo to Image after receiving camera parameters.");
+    // Unregister info callback as it is no longer needed.
+    left_info_sub_->unsubscribe();
+    right_info_sub_->unsubscribe();
+    // Reregister image callback as it is now ready.
     left_image_sub_->subscribe();
     right_image_sub_->subscribe();
   }
