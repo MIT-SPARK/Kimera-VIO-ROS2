@@ -12,7 +12,6 @@ find_package(Boost REQUIRED COMPONENTS
   timer
 )
 find_package(Gflags REQUIRED)
-find_package(OpenCV 3.3.1 REQUIRED)
 find_package(ament_cmake REQUIRED)
 find_package(cv_bridge REQUIRED)
 find_package(geometry_msgs REQUIRED)
