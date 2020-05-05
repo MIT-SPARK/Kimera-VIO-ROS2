@@ -15,13 +15,13 @@ repositories:
     # version: master
     url: https://github.com/ruffsl/DBoW2.git
     version: patch-1
-  opencv/opencv:
-    type: git
-    # url: https://github.com/opencv/opencv.git
-    # version: master
-    url: https://github.com/ruffsl/opencv.git
-    version: patch-1
-  opencv/opencv/contrib:
-    type: git
-    url: https://github.com/opencv/opencv_contrib.git
-    version: 3.3.1
+  # opencv/opencv:
+  #   type: git
+  #   # url: https://github.com/opencv/opencv.git
+  #   # version: master
+  #   url: https://github.com/ruffsl/opencv.git
+  #   version: patch-1
+  # opencv/opencv/contrib:
+  #   type: git
+  #   url: https://github.com/opencv/opencv_contrib.git
+  #   version: 3.3.1
