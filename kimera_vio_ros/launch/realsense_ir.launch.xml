@@ -1,6 +1,6 @@
 <launch>
   <group>
-    <arg name="dataset_name" default="RealSense_IR"/>
+    <arg name="dataset_name" default="RealSenseIR"/>
     <arg name="parallel" default="true" />
     <arg name="use_sim_time" default="false" />
     <!-- TODO: rectified should be true for realsense
@@ -27,6 +27,7 @@
   </group>
 
   <!-- Kimera assumes the imu is fundamentally the `base_link` refrence frame.
+    TODO: https://github.com/MIT-SPARK/Kimera-VIO/issues/41
     To keep the TF tree a tree, we can just publish a static TF
     that is just the inverse of the camera_link to camera_imu_optical_frame tf.
     E.g: `$ ros2 run tf2_ros tf2_echo camera_imu_optical_frame camera_link` -->
