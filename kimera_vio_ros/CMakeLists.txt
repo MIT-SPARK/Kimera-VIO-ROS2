@@ -86,7 +86,7 @@ install(DIRECTORY include/
   DESTINATION include)
 install(DIRECTORY launch
   DESTINATION share/${PROJECT_NAME})
-install(DIRECTORY param
+install(DIRECTORY params
   DESTINATION share/${PROJECT_NAME})
 
 if(BUILD_TESTING)
