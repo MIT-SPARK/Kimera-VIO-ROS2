@@ -14,7 +14,7 @@ repositories:
     # url: https://github.com/dorian3d/DBoW2.git
     # version: master
     url: https://github.com/ruffsl/DBoW2.git
-    version: patch-1
+    version: devel
   # opencv/opencv:
   #   type: git
   #   # url: https://github.com/opencv/opencv.git
