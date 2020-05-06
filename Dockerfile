@@ -42,9 +42,11 @@ RUN mkdir -p /tmp/opt && \
 
 # multi-stage for building
 FROM $FROM_IMAGE AS builder
-RUN rm -f /etc/apt/apt.conf.d/docker-clean && \
+
+# edit apt for caching
+RUN cp /etc/apt/apt.conf.d/docker-clean /etc/apt/ && \
     echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' \
-      > /etc/apt/apt.conf.d/keep-cache
+      > /etc/apt/apt.conf.d/docker-clean
 
 # install CI dependencies
 RUN --mount=type=cache,target=/var/cache/apt \
@@ -150,6 +152,10 @@ RUN --mount=type=cache,target=/root/.ccache \
           -Wno-parentheses \
           -Wno-unused-parameter"
       # --event-handlers console_direct+
+
+# restore apt for docker
+RUN mv /etc/apt/docker-clean /etc/apt/apt.conf.d/ && \
+    rm -rf /var/lib/apt/lists/
 
 # source wrapper from entrypoint
 ENV WRAPPER_WS $WRAPPER_WS
