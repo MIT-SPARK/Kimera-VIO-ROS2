@@ -2,7 +2,7 @@ repositories:
   # MIT-SPARK/Kimera-VIO-ROS2:
   #   type: git
   #   url: https://github.com/MIT-SPARK/Kimera-VIO-ROS2.git
-  #   version: master
+  #   version: foxy
   # ToniRV/mesh_rviz_plugins:
   #   type: git
   #   url: https://github.com/ToniRV/mesh_rviz_plugins.git
