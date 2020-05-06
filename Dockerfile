@@ -93,6 +93,7 @@ RUN . $UNDERLAY_WS/install/setup.sh && \
       --cmake-args \
         --no-warn-unused-cli \
         -DCMAKE_CXX_FLAGS="\
+          -Wno-comment \
           -Wno-parentheses \
           -Wno-reorder \
           -Wno-sign-compare \
@@ -126,6 +127,7 @@ RUN . $OVERLAY_WS/install/setup.sh && \
       --cmake-args \
         --no-warn-unused-cli \
         -DCMAKE_CXX_FLAGS="\
+          -Wno-comment \
           -Wno-sign-compare \
           -Wno-unused-value \
           -Wno-unused-variable \
